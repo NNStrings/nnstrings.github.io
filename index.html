@@ -181,6 +181,101 @@
         
 
 <div class="post">
+    <a href="/2025/06/29/cpp/%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0/">
+        <h2 class="post-title">变长参数</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/6/29
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>在无法给出所有传递给函数的参数的类型和数目时，可以使用省略号（…）指定函数参数表。</p>
+<pre><code class="language-cpp">void fun1(int a, double b, ...);
+void fun2(int a ...);
+void fun3(...);
+</code></pre>
+<p>最具代表性的变长参数函数：<code>printf</code> 函数。</p>
+<pre><code class="language-cpp">int printf(const char *fmt, ...);
+</code></pre>
+<p>要讲变长参数，就不得不先提一下几个宏，<code>va_list</code>，<code>va_start</code>，<code>va_arg</code>，<code>va_end</code>。</p>
+<p>具体的使用方法就是先定义一个 <code>va_list</code> 类型的变量，变量是指向参数的指针，使用 <code>va_start</code> 初始化刚定义的变量，<code>va_arg</code> 返回变长参数的值，<code>va_end</code> 将定义的变量重置为 NULL。下面的这个例子实现了计算几个数的和。</p>
+<pre><code class="language-cpp">int getsum(int count, ...) &#123;
+    int res = 0;
+    va_list ap;     // 定义一个 va_list 类型的变量
+    va_start(ap, count);     // va_start 初始化刚定义的变量
+    for (int i = 0; i &lt; count; i++)
+        res += va_arg(ap, int); // va_arg 返回变长参数的值
+    va_end(ap);     // va_end 将定义的变量重置为 NULL
+    return res;
+&#125;
+</code></pre>
+<p>顺便再提一句，还有一个宏 <code>va_copy</code>，它的作用是将一个 <code>va_list</code> 拷贝到另一个 <code>va_list</code> 中，具体用法是 <code>va_copy(dest, src);</code>，当我们可能要不止一次用到参数时，我们就会使用它，例如，分别计算参数的均值和方差。</p>
+<pre><code class="language-cpp">double sample_stddev(int count, ...) &#123;
+    double sum = 0;
+    va_list args1;
+    va_start(args1, count);
+    va_list args2;
+    va_copy(args2, args1);    // 拷贝一次参数
+    for (int i = 0; i &lt; count; ++i) &#123;
+        double num = va_arg(args1, double);
+        sum += num;
+    &#125;
+    va_end(args1);
+    double mean = sum / count;    // 计算均值
+ 
+    double sum_sq_diff = 0;
+    for (int i = 0; i &lt; count; ++i) &#123;
+        double num = va_arg(args2, double);
+        sum_sq_diff += (num-mean) * (num-mean);
+    &#125;
+    va_end(args2);
+    return sqrt(sum_sq_diff / count);   // 计算方差
+&#125;
+</code></pre>
+<p>在现代的gcc编译器中，上述的宏由gcc自带的内建函数定义。</p>
+<pre><code class="language-cpp">typedef __builtin_va_list va_list;
+#define va_start(v,l)	__builtin_va_start(v,l)
+#define va_end(v)	__builtin_va_end(v)
+#define va_arg(v,l)	__builtin_va_arg(v,l)
+</code></pre>
+<p>实际上，原理很简单，<code>va_list</code> 是一个字符指针，<code>va_start</code> 确定初始参数的下一个参数，<code>va_arg</code> 确定当前参数的下一个参数。</p>
+<pre><code class="language-cpp">typedef char *va_list;
+
+// 向上取整
+#define __va_rounded_size(TYPE)  \
+  (((sizeof (TYPE) + sizeof (int) - 1) / sizeof (int)) * sizeof (int))
+
+// 确定初始参数下一个参数的位置
+#define va_start(AP, LASTARG) 						\
+ (AP = ((char *) &amp;(LASTARG) + __va_rounded_size (LASTARG)))
+
+// 确定这个参数的下一个参数的位置
+#define va_arg(AP, TYPE)						\
+ (AP += __va_rounded_size (TYPE),					\
+  *((TYPE *) (AP - __va_rounded_size (TYPE))))
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2025/06/29/cpp/%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2025/06/28/hello-world/">
         <h2 class="post-title">Hello World</h2>
     </a>
@@ -842,17 +937,17 @@ endif()
         
         <span class="tag">
             
-            <a href="/tags/cmake/" style="color: #00a596">cmake</a>
+            <a href="/tags/cmake/" style="color: #03a9f4">cmake</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/cpp/" style="color: #00bcd4">cpp</a>
+            <a href="/tags/cpp/" style="color: #ff7d73">cpp</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/tutorial/" style="color: #00a596">tutorial</a>
+            <a href="/tags/tutorial/" style="color: #03a9f4">tutorial</a>
         </span>
         
     </div>
