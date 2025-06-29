@@ -184,21 +184,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/cmake/" style="color: #00a596">
+                <a href="/tags/cmake/" style="color: #ff7d73">
                     cmake
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/cpp/" style="color: #ffa2c4">
+                <a href="/tags/cpp/" style="color: #00a596">
                     cpp
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/tutorial/" style="color: #00bcd4">
+                <a href="/tags/tutorial/" style="color: #ff7d73">
                     tutorial
                 </a>
             </span>
@@ -237,7 +237,7 @@
 <pre><code class="language-cmake">cmake_minimum_required(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])
 </code></pre>
 <h3 id="message-命令"><a href="#message-命令" class="headerlink" title="message 命令"></a>message 命令</h3><p>语法：</p>
-<pre><code class="language-cmake">message([&lt;mode&gt;] &quot;message to display&quot; ...)
+<pre><code class="language-cmake">message([\&lt;mode\&gt;] &quot;message to display&quot; ...)
 </code></pre>
 <p>其中，mode 是可选的，可以指定消息的类型。常见的消息类型包括：</p>
 <ul>
@@ -450,7 +450,7 @@ target_link_libraries(MyExecutable PRIVATE MyLibraryA MyLibraryB)
 <pre><code class="language-cmake">target_link_libraries(MyExecutable PRIVATE MyLibrary::MyLibrary)
 </code></pre>
 <h3 id="target-precompile-headers-命令"><a href="#target-precompile-headers-命令" class="headerlink" title="target_precompile_headers 命令"></a>target_precompile_headers 命令</h3><h3 id="configure-file-命令"><a href="#configure-file-命令" class="headerlink" title="configure_file 命令"></a>configure_file 命令</h3><p><code>configure_file</code> 用于生成配置文件的命令。它允许你将模板文件中的内容根据 CMake 变量的值进行替换，并生成目标文件。这在构建系统中非常有用，尤其是在需要生成配置头文件（如 config.h）或脚本文件时。</p>
-<pre><code class="language-cmake">configure_file(&lt;input&gt; &lt;output&gt; [&lt;permissions&gt;]
+<pre><code>configure_file(&lt;input&gt; &lt;output&gt; [&lt;permissions&gt;]
                [COPYONLY]
                [ESCAPE_QUOTES]
                [@ONLY]
