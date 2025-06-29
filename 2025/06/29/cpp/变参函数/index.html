@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>变长参数 | Y&amp;X Stack</title>
+    <title>变参函数 | Y&amp;X Stack</title>
     <meta name="author" content="nnstrings" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -156,7 +156,7 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>变长参数</h1>
+        <h1>变参函数</h1>
     </div>
     <div class="info">
         <span class="date">
@@ -184,7 +184,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/cpp/" style="color: #ff7d73">
+                <a href="/tags/cpp/" style="color: #ffa2c4">
                     cpp
                 </a>
             </span>
@@ -194,10 +194,12 @@
     </div>
     
     <div class="content" v-pre>
-        <p>在无法给出所有传递给函数的参数的类型和数目时，可以使用省略号（…）指定函数参数表。</p>
+        <p>尽量不要C风格变参函数，现代C++提供了更安全、更强大的替代方案（变参模板等），但在特定场景下仍有存在价值。</p>
+<span id="more"></span>
+
+<p>在无法给出所有传递给函数的参数的类型和数目时，可以使用省略号（…）指定函数参数表。</p>
 <pre><code class="language-cpp">void fun1(int a, double b, ...);
 void fun2(int a ...);
-void fun3(...);
 </code></pre>
 <p>最具代表性的变长参数函数：<code>printf</code> 函数。</p>
 <pre><code class="language-cpp">int printf(const char *fmt, ...);
