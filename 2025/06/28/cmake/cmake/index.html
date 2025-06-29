@@ -198,7 +198,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/tutorial/" style="color: #00a596">
+                <a href="/tags/tutorial/" style="color: #00bcd4">
                     tutorial
                 </a>
             </span>
@@ -208,7 +208,7 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="cmake-专题"><a href="#cmake-专题" class="headerlink" title="cmake 专题"></a>cmake 专题</h1><h2 id="cmake-常见内置变量"><a href="#cmake-常见内置变量" class="headerlink" title="cmake 常见内置变量"></a>cmake 常见内置变量</h2><h3 id="构建目录和工作目录"><a href="#构建目录和工作目录" class="headerlink" title="构建目录和工作目录"></a>构建目录和工作目录</h3><ul>
+        <h2 id="cmake-常见内置变量"><a href="#cmake-常见内置变量" class="headerlink" title="cmake 常见内置变量"></a>cmake 常见内置变量</h2><h3 id="构建目录和工作目录"><a href="#构建目录和工作目录" class="headerlink" title="构建目录和工作目录"></a>构建目录和工作目录</h3><ul>
 <li>CMAKE_BINARY_DIR, PROJECT_BINARY_DIR, &lt;projectname&gt;_BINARY_DIR: 构建目录</li>
 <li>CMAKE_SOURCE_DIR, PROJECT_SOURCE_DIR, &lt;projectname&gt;_SOURCE_DIR: 项目工作目录</li>
 <li>CMAKE_CURRENT_SOURCE_DIR: 当前处理的 CMakeLists.txt 所在的路径</li>
@@ -414,7 +414,7 @@ target_compile_definitions(main PRIVATE TEST PUBLIC NDEBUG)
 </code></pre>
 <p><code>[BEFORE]</code> 是可选参数，表示将选项插入到现有选项列表的前面（默认情况下会追加到末尾）。</p>
 <p>例如我们现在要开启所有警告并将警告视为错误，并要求在 Linux 和 Windows 上都有效。</p>
-<pre><code class="language-cmake">target_compile_options(main PUBLIC $&lt;$&lt;PLATFORM_ID:Windows&gt;:/W4 /WX&gt;
+<pre><code>target_compile_options(main PUBLIC $&lt;$&lt;PLATFORM_ID:Windows&gt;:/W4 /WX&gt;
                                    $&lt;$&lt;PLATFORM_ID:Linux&gt;:-Wall -Werror)
 </code></pre>
 <h3 id="target-include-directories-命令"><a href="#target-include-directories-命令" class="headerlink" title="target_include_directories 命令"></a>target_include_directories 命令</h3><p><code>target_include_directories</code> 用于为目标指定包含目录（include directories）的命令。通过这个命令可以告诉编译器在编译特定目标时应该搜索哪些目录以查找头文件。</p>
@@ -427,7 +427,7 @@ target_compile_definitions(main PRIVATE TEST PUBLIC NDEBUG)
 target_include_directories(MyLibrary PUBLIC $&#123;PROJECT_SOURCE_DIR&#125;/include)
 </code></pre>
 <p>针对不同的构建类型（如 Debug 或 Release）设置不同的包含目录：</p>
-<pre><code class="language-cmake">target_include_directories(MyExecutable PRIVATE
+<pre><code>target_include_directories(MyExecutable PRIVATE
     $&lt;$&lt;CONFIG:Debug&gt;:$&#123;PROJECT_SOURCE_DIR&#125;/debug/include&gt;
     $&lt;$&lt;CONFIG:Release&gt;:$&#123;PROJECT_SOURCE_DIR&#125;/release/include&gt;
 )
@@ -641,42 +641,42 @@ install(EXPORT spdlog DESTINATION $&#123;export_dest_dir&#125; NAMESPACE spdlog:
 </code></pre>
 <h2 id="cmake-生成器表达式"><a href="#cmake-生成器表达式" class="headerlink" title="cmake 生成器表达式"></a>cmake 生成器表达式</h2><p>CMake 生成器表达式是一种用于在生成构建系统文件时进行条件判断和值替换的机制。它们允许你在配置阶段动态地指定编译选项、链接库、包含路径等，从而增强构建系统的灵活性和适应性。生成器表达式通常以 <code>$&lt;...&gt;</code> 的形式出现，并且可以在 <code>target_compile_definitions</code>、<code>target_include_directories</code>、<code>target_link_libraries</code> 等命令中使用。生成器表达式的值会在构建系统生成时被解析，而不是在 CMake 配置阶段。</p>
 <h3 id="条件表达式"><a href="#条件表达式" class="headerlink" title="条件表达式"></a>条件表达式</h3><p>将字符串转换为 0 或 1。以下情况计算结果为 0：当字符串为空，不区分大小写等于 0、FALSE、OFF、N、NO、IGNORE 或 NOTFOUND，或字符串以后缀 -NOTFOUND（区分大小写）结尾。其他情况等于 1。</p>
-<pre><code class="language-cmake">$&lt;BOOL:string&gt;
+<pre><code>$&lt;BOOL:string&gt;
 </code></pre>
 <p>如果条件为 1，则计算结果为 <code>true_string</code>，如果条件计算结果为 0，则计算结果为空字符串。条件的任何其他值都会导致错误。</p>
-<pre><code class="language-cmake">$&lt;condition:true_string&gt;
+<pre><code>$&lt;condition:true_string&gt;
 </code></pre>
 <p>如果条件为 1，则计算结果为 <code>true_string</code>，如果条件计算结果为 0，则计算结果为 <code>false_string</code>。条件的任何其他值都会导致错误。</p>
-<pre><code class="language-cmake">$&lt;IF:condition,true_string,false_string&gt;
+<pre><code>$&lt;IF:condition,true_string,false_string&gt;
 </code></pre>
 <h3 id="逻辑表达式"><a href="#逻辑表达式" class="headerlink" title="逻辑表达式"></a>逻辑表达式</h3><p>这里的 <code>conditions</code> 是一系列条件，AND、OR 和 NOT 就是简单的逻辑谓词</p>
-<pre><code class="language-cmake">$&lt;AND:conditions&gt;
+<pre><code>$&lt;AND:conditions&gt;
 $&lt;OR:conditions&gt;
 $&lt;NOT:condition&gt;
 </code></pre>
 <h3 id="字符串表达式"><a href="#字符串表达式" class="headerlink" title="字符串表达式"></a>字符串表达式</h3><p>字符串或者数值相等时结果为 1，否则结果为 0。</p>
-<pre><code class="language-cmake">$&lt;STREQUAL:string1,string2&gt;
+<pre><code>$&lt;STREQUAL:string1,string2&gt;
 $&lt;EQUAL:value1,value2&gt;
 </code></pre>
-<h3 id="配置表达式"><a href="#配置表达式" class="headerlink" title="配置表达式"></a>配置表达式</h3><pre><code class="language-cmake">$&lt;CONFIG&gt;
+<h3 id="配置表达式"><a href="#配置表达式" class="headerlink" title="配置表达式"></a>配置表达式</h3><pre><code>$&lt;CONFIG&gt;
 </code></pre>
 <p>根据当前构建配置（如 Debug、Release 等）返回不同的值。</p>
-<pre><code class="language-cmake">target_compile_definitions(main PUBLIC $&lt;$&lt;CONFIG:Debug&gt;:DEBUG_MODE&gt;)
+<pre><code>target_compile_definitions(main PUBLIC $&lt;$&lt;CONFIG:Debug&gt;:DEBUG_MODE&gt;)
 target_compile_definitions(main PUBLIC $&lt;$&lt;CONFIG:Release&gt;:RELEASE_MODE&gt;)
 </code></pre>
 <h3 id="工具链和语言表达式"><a href="#工具链和语言表达式" class="headerlink" title="工具链和语言表达式"></a>工具链和语言表达式</h3><p>平台 ID（操作系统 ID），其中，platform_ids 为 CMAKE_SYSTEM_NAME 变量的值。</p>
 <pre><code class="language-cmake">$&lt;PLATFORM_ID:platform_ids&gt;
 </code></pre>
 <p>根据平台 ID 返回不同的值。</p>
-<pre><code class="language-cmake">target_compile_definitions(main PRIVATE $&lt;$&lt;PLATFORM_ID:Windows&gt;:WINDOWS_PLATFORM&gt;)
+<pre><code>target_compile_definitions(main PRIVATE $&lt;$&lt;PLATFORM_ID:Windows&gt;:WINDOWS_PLATFORM&gt;)
 target_compile_definitions(main PRIVATE $&lt;$&lt;PLATFORM_ID:Linux&gt;:LINUX_PLATFORM&gt;)
 </code></pre>
 <p>C++ 编译器 ID，其值为 <code>CMAKE_&lt;LANG&gt;_COMPILER_ID</code> 变量的值。</p>
-<pre><code class="language-cmake">$&lt;CXX_COMPILER_ID&gt;
+<pre><code>$&lt;CXX_COMPILER_ID&gt;
 $&lt;COMPILE_LANGUAGE:languages&gt;
 </code></pre>
 <p>如果 C++ 编译器是 MSVC 且编译的语言不是 CUDA，那么就开启 <code>/wd4251</code> 和 <code>/wd4275</code> 编译选项。</p>
-<pre><code class="language-cmake">target_compile_options(main PUBLIC $&lt;$&lt;AND:$&lt;CXX_COMPILER_ID:MSVC&gt;
+<pre><code>target_compile_options(main PUBLIC $&lt;$&lt;AND:$&lt;CXX_COMPILER_ID:MSVC&gt;
     $&lt;NOT:$&lt;COMPILE_LANGUAGE:CUDA&gt;&gt;&gt;:/wd4251 /wd4275&gt;)
 </code></pre>
 <h2 id="cmake-模块"><a href="#cmake-模块" class="headerlink" title="cmake 模块"></a>cmake 模块</h2><h3 id="GNUInstallDirs-模块"><a href="#GNUInstallDirs-模块" class="headerlink" title="GNUInstallDirs 模块"></a>GNUInstallDirs 模块</h3><p>定义 GNU 标准安装目录，提供由 GNU 编码标准定义的安装目录变量。</p>
