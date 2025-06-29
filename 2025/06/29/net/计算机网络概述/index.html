@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Categories: cpp | Y&amp;X Stack</title>
+    <title>计算机网络-概述 | Y&amp;X Stack</title>
     <meta name="author" content="nnstrings" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -37,6 +37,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -150,49 +154,20 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        
-        <span>
-            <a href="/categories/start/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                start
-            </a>
+            <div class="article">
+    <div>
+        <h1>计算机网络-概述</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/6/29
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/cmake/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                cmake
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/cpp/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                cpp
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/net/" style="background: #00a596">
+        <span class="category">
+            <a href="/categories/net/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -201,45 +176,104 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/net/" style="color: #ff7d73">
+                    net
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86/" style="color: #00bcd4">
+                    计算机网络知识
+                </a>
+            </span>
+            
+        </span>
+        
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2025/6/29</div>
-            <a href="/2025/06/29/cpp/%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0/">
-                <h3>变长参数</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/cpp/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        cpp
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/cpp/" style="color: #03a9f4">
-                            cpp
-                        </a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>OSI参考模型与TCP&#x2F;IP参考模型:</p>
+<table>
+    <tr>
+        <td>OSI七层模型</td>
+        <td>TCP/IP模型</td>
+        <td>功能</td>
+        <td>TCP/IP协议族</td>
+    </tr>
+    <tr>
+        <td>应用层</td>
+        <td rowspan="3">应用层</td>
+        <td>直接向计算机用户提供接口和服务，完成用户希望完成的各种网路操作</td>
+        <td>HTTP, FTP, TFTP, DNS, Telnet, SMTP</td>
+    </tr>
+    <tr>
+        <td>表示层</td>
+        <td>进行数据编解码，数据加解密和格式转换</td>
+        <td>没有协议</td>
+    </tr>
+    <tr>
+        <td>会话层</td>
+        <td>管理（建立、维护、重连）通信会话，组织和协调两个会话进程之间的通信，并对数据交换进行管理</td>
+        <td>没有协议</td>
+    </tr>
+    <tr>
+        <td>传输层</td>
+        <td>传输层</td>
+        <td>向两台主机中进程之间的通信提供通用的数据传输服务，<b>实现端到端连接</b></td>
+        <td>TCP, UDP</td>
+    </tr>
+    <tr>
+        <td>网络层</td>
+        <td>网络层</td>
+        <td>为分组交换网上的不同主机提供通信服务，也就是进行IP选址和路由选择</td>
+        <td>IP, ICMP, RIP, IGMP</td>
+    </tr>
+    <tr>
+        <td>数据链路层</td>
+        <td>数据链路层</td>
+        <td>在物理层提供的比特流基础上，通过差错控制，流量控制的方法，将由差错的物理线路变为无差错、能可靠传输数据帧的数据链路</td>
+        <td>SLIP, CSLIP, PPP, ARP, RARP</td>
+    </tr>
+    <tr>
+        <td>物理层</td>
+        <td>物理层</td>
+        <td>利用传输介质为数据链路提供物理连接，实现相邻计算机节点之间比特流的透明传输</td>
+        <td>IEEE802.1 A, IEEE802.2到IEEE802.11</td>
+    </tr>
+</table>
+
+<p>不同网络层次之间，数据进行不断的传递，不同网络层次之间数据传递的单位是协议数据单元（PDU），从应用层到物理层，应用层是消息和报文（Message），传输层中，TCP是数据段（Segment），UDP是数据报（Datagram），网络层是分组，数据包（Packet），数据链路层是数据帧（Frame），物理层是比特流（Bit）。</p>
+<p>PDU在网络通信中有非常重要的作用，其功能主要有：</p>
+<ul>
+<li>数据的封装和解封装：每一层在发送数据时，上层数据作为负载进行封装，并添加该层特定的头部信息，在接收数据时，逐层解封装，去掉各层头部信息，还原上层数据。</li>
+<li>协议操作与控制：PDU头部包含协议信息，如源地址、目的地址、序列号、确认号等，保证数据的正确传输和控制。</li>
+<li>错误检测与纠正：添加校验码等信息，网络层和链路层能够检测并纠正传输错误，提高传输的可靠性。</li>
+</ul>
+<h2 id="主要参考文献"><a href="#主要参考文献" class="headerlink" title="主要参考文献"></a>主要参考文献</h2><ul>
+<li>计算机网络：自顶向下方法（原书第8版）</li>
+<li>TCP-IP详解卷1：协议</li>
+<li>TCP-IP详解卷2：实现</li>
+<li>图解HTTP</li>
+<li>图解TCPIP</li>
+<li>大量个人博客、知乎、bilibili等</li>
+</ul>
+
     </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -271,6 +305,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>
