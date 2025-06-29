@@ -234,12 +234,12 @@
         
         <span class="tag">
             
-            <a href="/tags/tutorial/" style="color: #03a9f4">tutorial</a>
+            <a href="/tags/tutorial/" style="color: #00bcd4">tutorial</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/hexo/" style="color: #00a596">hexo</a>
+            <a href="/tags/hexo/" style="color: #ffa2c4">hexo</a>
         </span>
         
     </div>
@@ -299,10 +299,10 @@
 </ul>
 <h2 id="cmake-常见命令"><a href="#cmake-常见命令" class="headerlink" title="cmake 常见命令"></a>cmake 常见命令</h2><h3 id="cmake-minimum-required-命令"><a href="#cmake-minimum-required-命令" class="headerlink" title="cmake_minimum_required 命令"></a>cmake_minimum_required 命令</h3><p>定义 CMake 的最低或最低和最高兼容版本范围。</p>
 <p>语法：</p>
-<pre><code class="language-cmake">cmake_minimum_required(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])
+<pre><code>cmake_minimum_required(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])
 </code></pre>
 <h3 id="message-命令"><a href="#message-命令" class="headerlink" title="message 命令"></a>message 命令</h3><p>语法：</p>
-<pre><code class="language-cmake">message([\&lt;mode\&gt;] &quot;message to display&quot; ...)
+<pre><code>message([&lt;mode&gt;] &quot;message to display&quot; ...)
 </code></pre>
 <p>其中，mode 是可选的，可以指定消息的类型。常见的消息类型包括：</p>
 <ul>
@@ -322,22 +322,22 @@ include(OPTIONAL path/to/your/file2.cmake)
 </code></pre>
 <h3 id="file-命令"><a href="#file-命令" class="headerlink" title="file 命令"></a>file 命令</h3><p>文件操作命令，此命令专用于需要访问文件系统的文件和路径操作。</p>
 <p>将文件 filename 读到变量 variable 中</p>
-<pre><code class="language-cmake">file(READ &lt;filename&gt; &lt;variable&gt; [OFFSET &lt;offset&gt;] [LIMIT &lt;limit&gt;] [HEX])
+<pre><code>file(READ &lt;filename&gt; &lt;variable&gt; [OFFSET &lt;offset&gt;] [LIMIT &lt;limit&gt;] [HEX])
 file(READ &quot;README.md&quot; README_CONTENT)
 </code></pre>
 <p>将内容 content 写入文件 filename</p>
-<pre><code class="language-cmake">file(WRITE &lt;filename&gt; &lt;content&gt;...)
+<pre><code>file(WRITE &lt;filename&gt; &lt;content&gt;...)
 file(WRITE &quot;output.txt&quot; &quot;Hello, CMake!&quot;)
 </code></pre>
 <p>生成与 globbing-expressions 匹配的文件列表并将其存储到 variable 中，globbing-expressions 与正则表达式类似，但更简单</p>
-<pre><code class="language-cmake">file(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)
+<pre><code>file(GLOB &lt;variable&gt; [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)
 file(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS] [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)
 </code></pre>
 <p>如果指定了 RELATIVE 标志，则结果将作为给定路径的相对路径返回，如果 LIST_DIRECTORIES 设置为 false，则结果中会省略目录。</p>
 <p>GLOB_RECURSE 模式将遍历匹配目录的所有子目录并匹配文件，默认情况下，GLOB_RECURSE 会从结果列表中省略目录。</p>
 <h3 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h3><p><code>set</code> 命令用于设置变量的值。它可以用来定义普通的变量、缓存变量（即保存在 CMakeCache.txt 文件中的变量）以及目标属性等。</p>
 <p><strong>设置普通变量：</strong></p>
-<pre><code class="language-cmake">set(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])
+<pre><code>set(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])
 </code></pre>
 <p>&lt;variable&gt; 是要设置的变量名，&lt;value&gt;… 是变量的值，可以是一个或多个值，[PARENT_SCOPE] 可以将变量加到父目录。</p>
 <pre><code class="language-cmake">set(MY_VARIABLE &quot;hello, cmake!&quot;)
@@ -348,13 +348,13 @@ foreach(item IN LISTS MY_LIST)
 endforeach()
 </code></pre>
 <p><strong>设置缓存变量：</strong></p>
-<pre><code class="language-cmake">set(&lt;variable&gt; &lt;value&gt;... CACHE &lt;type&gt; &lt;docstring&gt; [FORCE])
+<pre><code>set(&lt;variable&gt; &lt;value&gt;... CACHE &lt;type&gt; &lt;docstring&gt; [FORCE])
 </code></pre>
 <p>&lt;variable&gt; 是要设置的变量名，&lt;value&gt;… 是变量的值，可以是一个或多个值，&lt;type&gt; 是变量的类型，&lt;docstring&gt; 是描述信息，[FORCE] 是强制覆盖现有的缓存值。</p>
 <pre><code class="language-cmake">set(CMAKE_BUILD_TYPE &quot;Release&quot; CACHE STRING &quot;Choose Release or Debug&quot; FORCE)
 </code></pre>
 <h3 id="option-命令"><a href="#option-命令" class="headerlink" title="option 命令"></a>option 命令</h3><p>提供一个用户可以选择性选择的布尔选项。</p>
-<pre><code class="language-cmake">option(&lt;variable&gt; &quot;&lt;help_text&gt;&quot; [value])
+<pre><code>option(&lt;variable&gt; &quot;&lt;help_text&gt;&quot; [value])
 </code></pre>
 <p>&lt;value&gt; 如果没有提供初始值 ，则布尔值 <code>OFF</code> 是默认值。如果 &lt;variable&gt; 已设置为正常或缓存变量，则该命令不执行任何操作。</p>
 <h3 id="find-package-命令"><a href="#find-package-命令" class="headerlink" title="find_package 命令"></a>find_package 命令</h3><p><code>find_package</code> 用于查找和加载外部库或模块。它可以帮助你自动发现并配置项目依赖的第三方库，从而简化项目的配置过程。</p>
@@ -365,7 +365,7 @@ endforeach()
 <li>设置变量和目标：配置文件通常会设置一些变量（如 <code>$&#123;PackageName&#125;_FOUND</code>），并导入目标（如 <code>target_link_libraries</code>）</li>
 </ul>
 <p>基本语法：</p>
-<pre><code class="language-cmake">find_package(&lt;PackageName&gt; [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]])
+<pre><code>find_package(&lt;PackageName&gt; [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]])
 </code></pre>
 <p>其中，&lt;PackageName&gt; 为要查找的包名称，[version] 是指定所需的版本号，[EXACT] 表示如果指定了版本号，则要求版本必须完全匹配，[QUIET] 表示如果找不到包，不输出错误信息，[REQUIRED] 表示如果找不到包，则中止配置过程并显示错误信息，[[COMPONENTS] [components…]] 指包的特定组件。</p>
 <p>下面举一些常用的 C++ 库</p>
@@ -423,7 +423,7 @@ list(APPEND SOURCE_FILES &quot;new_feature.cpp&quot;)
 </code></pre>
 <h3 id="add-library-命令"><a href="#add-library-命令" class="headerlink" title="add_library 命令"></a>add_library 命令</h3><p><code>add_library</code> 是用于定义库目标（library target）的关键命令。通过 add_library，可以创建静态库、共享库（动态库）、模块库或接口库，并将源文件编译成这些库。</p>
 <p>基本语法：</p>
-<pre><code class="language-cmake">add_library(&lt;name&gt; [STATIC | SHARED | MODULE | INTERFACE] [EXCLUDE_FROM_ALL] &lt;sources&gt;...)
+<pre><code>add_library(&lt;name&gt; [STATIC | SHARED | MODULE | INTERFACE] [EXCLUDE_FROM_ALL] &lt;sources&gt;...)
 </code></pre>
 <p>其中，&lt;name&gt; 是库的目标名称，[STATIC | SHARED | MODULE | INTERFACE] 指定库的类型（可选，默认为静态库），[EXCLUDE_FROM_ALL] 可以将该库从所有构建目标中排除（可选），&lt;sources&gt; 是库的源文件列表。</p>
 <ul>
@@ -460,7 +460,7 @@ target_link_libraries(main PRIVATE math)
 </code></pre>
 <h3 id="target-compile-definitions-命令"><a href="#target-compile-definitions-命令" class="headerlink" title="target_compile_definitions 命令"></a>target_compile_definitions 命令</h3><p><code>target_compile_definitions</code> 用于为目标添加编译定义（compile definitions）的命令（可以直接理解成为目标添加宏定义）。</p>
 <p>基本语法：</p>
-<pre><code class="language-cmake">target_compile_definitions(&lt;target&gt;
+<pre><code>target_compile_definitions(&lt;target&gt;
   &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...]
   [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])
 </code></pre>
@@ -473,7 +473,7 @@ target_compile_definitions(main PRIVATE TEST PUBLIC NDEBUG)
 </code></pre>
 <h3 id="target-compile-options-命令"><a href="#target-compile-options-命令" class="headerlink" title="target_compile_options 命令"></a>target_compile_options 命令</h3><p><code>target_compile_options</code> 用于为目标添加编译器选项。通过这个命令可以在构建过程中为特定的目标（如可执行文件、库等）设置编译器标志和选项。这些选项会在编译该目标时传递给编译器，从而控制代码的编译行为。</p>
 <p>基本语法：</p>
-<pre><code class="language-cmake">target_compile_options(&lt;target&gt; [BEFORE]
+<pre><code>target_compile_options(&lt;target&gt; [BEFORE]
   &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...]
   [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])
 </code></pre>
@@ -484,7 +484,7 @@ target_compile_definitions(main PRIVATE TEST PUBLIC NDEBUG)
 </code></pre>
 <h3 id="target-include-directories-命令"><a href="#target-include-directories-命令" class="headerlink" title="target_include_directories 命令"></a>target_include_directories 命令</h3><p><code>target_include_directories</code> 用于为目标指定包含目录（include directories）的命令。通过这个命令可以告诉编译器在编译特定目标时应该搜索哪些目录以查找头文件。</p>
 <p>基本语法：</p>
-<pre><code class="language-cmake">target_include_directories(&lt;target&gt; [BEFORE] [SYSTEM] [INTERFACE | PUBLIC | PRIVATE] &lt;directory&gt; ...)
+<pre><code>target_include_directories(&lt;target&gt; [BEFORE] [SYSTEM] [INTERFACE | PUBLIC | PRIVATE] &lt;directory&gt; ...)
 </code></pre>
 <p>其中，<code>[BEFORE]</code> 为可选参数，表示将目录插入到现有目录列表的前面（默认情况下会追加到末尾）。<br><code>[SYSTEM]</code> 为可选参数，表示这些目录是系统目录，某些编译器会对这些目录中的警告进行特殊处理。</p>
 <p>添加公共的包含目录：</p>
@@ -499,7 +499,7 @@ target_include_directories(MyLibrary PUBLIC $&#123;PROJECT_SOURCE_DIR&#125;/incl
 </code></pre>
 <h3 id="target-link-libraries-命令"><a href="#target-link-libraries-命令" class="headerlink" title="target_link_libraries 命令"></a>target_link_libraries 命令</h3><p><code>target_link_libraries</code> 用于为目标指定链接库的关键命令。通过该命令，你可以告诉编译器在构建目标（如可执行文件或库）时需要链接哪些库。这使得项目能够正确地引用外部依赖项或内部模块。</p>
 <p>基本语法：</p>
-<pre><code class="language-cmake">target_link_libraries(&lt;target&gt; [BEFORE] [PRIVATE|PUBLIC|INTERFACE] &lt;library&gt;...&gt;)
+<pre><code>target_link_libraries(&lt;target&gt; [BEFORE] [PRIVATE|PUBLIC|INTERFACE] &lt;library&gt;...&gt;)
 </code></pre>
 <p>链接单个库和链接多个库：</p>
 <pre><code class="language-cmake">add_executable(MyExecutable main.cpp)
@@ -564,7 +564,7 @@ target_include_directories(MyExecutable PRIVATE $&#123;CMAKE_BINARY_DIR&#125;)
 </code></pre>
 <h3 id="install-命令"><a href="#install-命令" class="headerlink" title="install 命令"></a>install 命令</h3><p><code>install</code> 命令是 CMake 中用于指定安装规则的关键命令。<code>install</code> 命令可以定义哪些文件和目标需要在构建完成后被复制到指定的安装目录中。这使得项目可以方便地进行打包、部署和分发。</p>
 <p>基本语法：</p>
-<pre><code class="language-cmake">install(TARGETS &lt;target&gt;... [...])
+<pre><code>install(TARGETS &lt;target&gt;... [...])
 install(DIRECTORY &lt;dir&gt;... [...])
 install(FILES &lt;file&gt;... [...])
 install(PROGRAMS &lt;file&gt;... [...])
@@ -574,7 +574,7 @@ install(RUNTIME_DEPENDENCY_SET &lt;setName&gt; [...])
 </code></pre>
 <p><strong>安装目标（TARGETS）</strong></p>
 <p><code>install(TARGETS ...)</code> 用于指定将哪些构建目标（如可执行文件、库等）安装到指定位置。</p>
-<pre><code class="language-cmake">install(TARGETS targets... [EXPORT &lt;export-name&gt;]
+<pre><code>install(TARGETS targets... [EXPORT &lt;export-name&gt;]
         RUNTIME DESTINATION &lt;dir&gt;
         LIBRARY DESTINATION &lt;dir&gt;
         ARCHIVE DESTINATION &lt;dir&gt;
@@ -620,7 +620,7 @@ install(TARGETS MyLibrary MyExecutable
 </code></pre>
 <p><strong>安装目录（DIRECTORY）</strong></p>
 <p><code>install(DIRECTORY ...)</code> 用于指定将整个目录及其内容安装到指定位置</p>
-<pre><code class="language-cmake">install(DIRECTORY dirs... DESTINATION &lt;dir&gt;
+<pre><code>install(DIRECTORY dirs... DESTINATION &lt;dir&gt;
         [FILE_PERMISSIONS permissions...]
         [DIRECTORY_PERMISSIONS permissions...]
         [USE_SOURCE_PERMISSIONS]
@@ -657,7 +657,7 @@ endif()
 </code></pre>
 <p><strong>安装文件（FILES）</strong></p>
 <p><code>install(FILES ...)</code> 用于指定将特定文件安装到指定位置。</p>
-<pre><code class="language-cmake">install(FILES files... DESTINATION &lt;dir&gt;
+<pre><code>install(FILES files... DESTINATION &lt;dir&gt;
         [FILE_PERMISSIONS permissions...]
         [DIRECTORY_PERMISSIONS permissions...]
         [USE_SOURCE_PERMISSIONS]
@@ -684,7 +684,7 @@ install(FILES &quot;$&#123;pkg_config&#125;&quot; DESTINATION &quot;$&#123;pkgco
 </code></pre>
 <p><strong>安装导出集（EXPORT）</strong></p>
 <p><code>install(EXPORT ...)</code> 用于生成并安装目标导出集，通常用于生成配置文件以便其他项目使用该库。</p>
-<pre><code class="language-cmake">install(EXPORT &lt;export-name&gt; DESTINATION &lt;dir&gt;
+<pre><code>install(EXPORT &lt;export-name&gt; DESTINATION &lt;dir&gt;
         [NAMESPACE &lt;namespace&gt;]
         [FILE &lt;name&gt;.cmake]
         [EXPORT_LINK_INTERFACE_LIBRARIES]
@@ -730,7 +730,7 @@ $&lt;EQUAL:value1,value2&gt;
 target_compile_definitions(main PUBLIC $&lt;$&lt;CONFIG:Release&gt;:RELEASE_MODE&gt;)
 </code></pre>
 <h3 id="工具链和语言表达式"><a href="#工具链和语言表达式" class="headerlink" title="工具链和语言表达式"></a>工具链和语言表达式</h3><p>平台 ID（操作系统 ID），其中，platform_ids 为 CMAKE_SYSTEM_NAME 变量的值。</p>
-<pre><code class="language-cmake">$&lt;PLATFORM_ID:platform_ids&gt;
+<pre><code>$&lt;PLATFORM_ID:platform_ids&gt;
 </code></pre>
 <p>根据平台 ID 返回不同的值。</p>
 <pre><code>target_compile_definitions(main PRIVATE $&lt;$&lt;PLATFORM_ID:Windows&gt;:WINDOWS_PLATFORM&gt;)
@@ -747,8 +747,8 @@ $&lt;COMPILE_LANGUAGE:languages&gt;
 <h2 id="cmake-模块"><a href="#cmake-模块" class="headerlink" title="cmake 模块"></a>cmake 模块</h2><h3 id="GNUInstallDirs-模块"><a href="#GNUInstallDirs-模块" class="headerlink" title="GNUInstallDirs 模块"></a>GNUInstallDirs 模块</h3><p>定义 GNU 标准安装目录，提供由 GNU 编码标准定义的安装目录变量。</p>
 <p>常用变量：</p>
 <ul>
-<li>CMAKE_INSTALL_&lt;dir&gt;: </li>
-<li>CMAKE_INSTALL_FULL_<dir>:</li>
+<li>CMAKE_INSTALL_&lt;dir&gt;</li>
+<li>CMAKE_INSTALL_FULL_&lt;dir&gt;</li>
 </ul>
 <p>其中，<code>&lt;dir&gt;</code> 是以下的其中之一：</p>
 <ul>
@@ -774,8 +774,9 @@ $&lt;COMPILE_LANGUAGE:languages&gt;
 </code></pre>
 <h3 id="S"><a href="#S" class="headerlink" title="-S"></a>-S</h3><p>要构建的 CMake 项目的根目录路径</p>
 <h3 id="B"><a href="#B" class="headerlink" title="-B"></a>-B</h3><p>设置构建目录</p>
-<pre><code class="language-bash">cmake [&lt;options&gt;] -B &lt;path-to-build&gt; [-S &lt;path-to-source&gt;]
-cmake -S . -B build
+<pre><code>cmake [&lt;options&gt;] -B &lt;path-to-build&gt; [-S &lt;path-to-source&gt;]
+</code></pre>
+<pre><code class="language-bash">cmake -S . -B build
 </code></pre>
 <h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><p>设置生成器，指定使用的生成器（如 Makefile, Ninja, Visual Studio 等）。不同的生成器会生成不同类型的构建系统文件。</p>
 <pre><code class="language-bash">cmake -G &quot;Unix Makefiles&quot; ..
@@ -809,10 +810,10 @@ target_link_libraries(runtests PRIVATE testlib)
 <pre><code class="language-bash">cmake -S . -B build --target runtests
 </code></pre>
 <h3 id="–build"><a href="#–build" class="headerlink" title="–build"></a>–build</h3><p>构建项目</p>
-<pre><code class="language-cmake">cmake --build build
+<pre><code class="language-bash">cmake --build build
 </code></pre>
 <h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><p>指定构建项目的线程数</p>
-<pre><code class="language-cmake">cmake --build build -j4
+<pre><code class="language-bash">cmake --build build -j4
 </code></pre>
 <h2 id="cmake-小技巧"><a href="#cmake-小技巧" class="headerlink" title="cmake 小技巧"></a>cmake 小技巧</h2><blockquote>
 <p>判断项目是主项目还是作为一个子模块被其他项目引用</p>
@@ -841,7 +842,7 @@ endif()
         
         <span class="tag">
             
-            <a href="/tags/cmake/" style="color: #03a9f4">cmake</a>
+            <a href="/tags/cmake/" style="color: #00a596">cmake</a>
         </span>
         
         <span class="tag">
