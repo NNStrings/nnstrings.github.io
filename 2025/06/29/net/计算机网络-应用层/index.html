@@ -1,0 +1,925 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Strings Ninety-nine">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机网络知识篇之应用层详解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络-应用层">
+<meta property="og:url" content="https://nnstrings.github.io/2025/06/29/net/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E5%BA%94%E7%94%A8%E5%B1%82/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="计算机网络知识篇之应用层详解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/6.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/1.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/3.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/2.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/4.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/7.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/8.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/9.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/10.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/11.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/12.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/13.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/14.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/15.png">
+<meta property="og:image" content="https://nnstrings.github.io/images/cn-img/2/5.png">
+<meta property="article:published_time" content="2025-06-29T08:10:06.000Z">
+<meta property="article:modified_time" content="2025-06-29T09:29:06.185Z">
+<meta property="article:author" content="Strings Ninety-nine">
+<meta property="article:tag" content="net">
+<meta property="article:tag" content="计算机网络知识">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nnstrings.github.io/images/cn-img/2/6.png">
+  
+  
+  
+  <title>计算机网络-应用层 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nnstrings.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机网络-应用层"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-29 16:10" pubdate>
+          2025年6月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计算机网络-应用层</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>计算机网络知识篇之应用层详解</p>
+<span id="more"></span>
+
+<h2 id="网络应用原理"><a href="#网络应用原理" class="headerlink" title="网络应用原理"></a>网络应用原理</h2><h3 id="网络应用体系结构"><a href="#网络应用体系结构" class="headerlink" title="网络应用体系结构"></a>网络应用体系结构</h3><p>应用体系结构主要有两种主流的体系结构：客户-服务端体系结构和对等（P2P）体系结构。</p>
+<ul>
+<li>客户-服务端体系结构：有一个总是打开的主机，称为服务器，服务于来自其他成为客户的主机的请求</li>
+<li>P2P体系结构：对专用服务器几乎没有依赖，应用程序在间断连接的主机对之间使用直接通信</li>
+</ul>
+<h3 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h3><p>进行通信的实际是进程，它们使用进程间通信机制相互通信，在两个不同端系统上的进程，通过跨越计算机网络交换报文来相互通信。在一对进程之间的通信会话场景中，发起通信的进程被标识为客户，在会话开始时等待联系的进程是服务器。</p>
+<p>从一个进程向另一个进程发送报文必须通过下面的网络，进程通过一个成为<strong>套接字</strong>的软件接口向网络发送报文和从网络接收报文。下图展现了两个经过因特网通信的进程之间的套接字通信。</p>
+<p><img src="/images/cn-img/2/6.png" srcset="/img/loading.gif" lazyload></p>
+<p>为了标识该接收进程，需要定义主机的地址和在目的主机中指定接收进程的标识符。在因特网中，主机有IP地址标识，接收进程的标识符用端口号表示。流行的应用分配了特定的端口号，例如Web服务器使用80端口，邮件服务器进程使用25端口。</p>
+<h3 id="可供应用程序使用的传输协议"><a href="#可供应用程序使用的传输协议" class="headerlink" title="可供应用程序使用的传输协议"></a>可供应用程序使用的传输协议</h3><p>应用程序服务要求有以下几点：可靠数据传输，吞吐量，定时和安全性。因特网为应用程序提供两个传输层协议，TCP和UDP。</p>
+<p>TCP服务模型包括面向连接的服务和可靠的数据传输服务。</p>
+<ul>
+<li>面向连接的服务：在应用层数据报文开始流动之前，TCP让客户和服务器相互交换传输层控制信息，在握手阶段后，一个全双工（连接双方的进程可以同时进行报文的收发）的TCP连接在两个进程之间建立。当应用程序结束报文发送时，必须拆除连接。</li>
+<li>可靠的数据传输服务：通信进程能够依靠TCP，无差错、按适当顺序交付所有发送的数据。</li>
+</ul>
+<p>UDP是一种不提供不必要服务的轻量级传输协议，它仅提供最低限度的服务，UDP是无连接的，提供一种不可靠数据传输服务。</p>
+<h2 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h2><h3 id="域名系统概述"><a href="#域名系统概述" class="headerlink" title="域名系统概述"></a>域名系统概述</h3><p>域名系统DNS，是互联网使用的命名系统，用来把人们使用的机器名字转换为IP地址，互联网采用层次结构的命名树作为主机的名字，并使用分布式域名系统DNS，DNS使大多数名字都在本地进行解析，仅少量需要互联网上通信。</p>
+<p>域名解析过程：当需要把主机名解析成IP地址时，应用进程调用解析程序，并成为DNS的一个客户，把待解析的域名放在DNS请求报文中，以UDP用户数据报方式发给本地域名服务器，本地域名服务器查找域名后，把对应的IP地址放在回答报文中返回，应用进程获得目的主机的IP地址后即可进行通信。</p>
+<h3 id="互联网域名结构"><a href="#互联网域名结构" class="headerlink" title="互联网域名结构"></a>互联网域名结构</h3><p>互联网采用层次结构的命名树作为主机的名字，任何一个连接在互联网上的主机或路由器都有一个唯一的层次结构名字，即域名。</p>
+<p>域名的分类：</p>
+<ul>
+<li>顶级域名<ul>
+<li>国家顶级域名（cn, us等）</li>
+<li>通用顶级域名（com, net, org, edu等）</li>
+<li>基础结构域名（只有arpa，用于反向域名解析，又称反向域名）</li>
+</ul>
+</li>
+<li>二级域名<ul>
+<li>类别域名（ac, com, edu, gov等）</li>
+<li>行政区域名（bj, js等）</li>
+</ul>
+</li>
+</ul>
+<p>域名空间：</p>
+<p><img src="/images/cn-img/2/1.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="域名服务器"><a href="#域名服务器" class="headerlink" title="域名服务器"></a>域名服务器</h3><p>域名服务器分类：</p>
+<ul>
+<li>根域名服务器：层次最高的域名服务器，所有的根域名服务器都知道所有的顶级域名服务器的域名和IP地址，根域名服务器是最重要的域名服务器，无论是哪个本地域名服务器要对互联网上任何一个域名进行解析，只要自己无法解析，就首先要求助于根域名服务器</li>
+<li>顶级域名服务器：负责管理在该顶级域名服务器注册的所有二级域名，当收到DNS查询请求时，就给出相应的回答</li>
+<li>权限域名服务器：负责一个区的域名服务器，当权限域名服务器还不能给出回答时，就会告诉发出查询请求的DNS客户，下一步应找哪一个权限域名服务器</li>
+<li>本地域名服务器：当主机发出DNS查询请求时，这个查询请求报文发给本地域名服务器</li>
+</ul>
+<p><img src="/images/cn-img/2/3.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="域名解析过程"><a href="#域名解析过程" class="headerlink" title="域名解析过程"></a>域名解析过程</h3><p>主机向本地域名服务器查询，采用递归查询：如果本地域名服务器不知道查询域名的IP，则本地域名服务器以DNS客户的身份，向其他根域名服务器发出查询请求报文，而不是让主机自己查询。</p>
+<p>本地域名服务器向根域名服务器查询，采用迭代查询：当根域名服务器收到本地域名服务器发出的查询请求报文时，要么给出要查询的IP地址，要么告诉本地域名服务器下一步应向哪个域名服务器查询，通常是把自己知道的顶级域名服务器IP地址告诉本地域名服务器，接着本地域名服务器在向顶级域名服务器查询，顶级域名服务器查询通常是告知权限域名服务器的IP地址，本地域名服务器在向权限域名服务器查询，最后权限域名服务器把查询结果告诉本地域名服务器，最后把查询结果返回给主机。</p>
+<p><img src="/images/cn-img/2/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>为了提高DNS查询效率，并减轻根域名服务器的负荷，在域名服务器中广泛使用高速缓存，在主机本地浏览器缓存和HOST文件中，也缓存了一些域名的IP地址。</p>
+<h2 id="文件传输协议"><a href="#文件传输协议" class="headerlink" title="文件传输协议"></a>文件传输协议</h2><h3 id="FTP-概述"><a href="#FTP-概述" class="headerlink" title="FTP 概述"></a>FTP 概述</h3><p>文件传输协议FTP是互联网上使用最广泛的文件传输协议，提供交互式访问，允许客户指明文件类型和格式，并允许文件具有存取权限。</p>
+<p>基于TCP的FTP和基于UDP的简单文件传输协议TFTP，它们都是文件共享协议中的一大类，即复制整个文件，其特点是：若要存取一个文件，就必须先获得一个本地的文件副本。如果要修改文件，只能对文件的副本进行修改，然后将修改后的文件副本传回原节点。</p>
+<h3 id="FTP-的基本工作原理"><a href="#FTP-的基本工作原理" class="headerlink" title="FTP 的基本工作原理"></a>FTP 的基本工作原理</h3><p>FTP的特点：只提供文件传输的基本服务，使用TCP可靠性运输服务，FTP的主要功能是减少或消除在不同操作系统下处理文件的不兼容性。</p>
+<p>FTP工作流程：FTP使用客户服务器方式，一个FTP服务器进程可以同时为多个客户进程提供服务，FTP的服务进程分为两大部分：主进程，负责接受新的请求；若干从属进程，负责处理单个请求。</p>
+<p>主进程工作步骤：</p>
+<ul>
+<li>打开熟知端口21，是客户进程能够连接</li>
+<li>等待客户进程发出连接请求</li>
+<li>启动从属进程处理客户进程发来的请求。从属进程对客户进程的请求处理完毕后即终止，但从属进程在运行期间根据需要还可以创建一些子进程</li>
+<li>回到等待状态，继续接受其他客户进程发来的请求。主进程与从属进程的处理是并发进行的</li>
+</ul>
+<p>FTP的两个TCP连接：</p>
+<ul>
+<li>控制连接：在整个会话期间一直打开，FTP客户发出的传送请求，通过控制连接发送给服务器端口21</li>
+<li>数据连接：用于传输文件，端口号20</li>
+</ul>
+<p>由于FTP使用两个不同的端口号，所以数据连接与控制连接不会发生混乱。服务器端控制进程收到FTP客户发来的文件传输请求后，就创建数据传输进程和数据连接，用来连接客户端和服务端的数据传送进程。</p>
+<p><img src="/images/cn-img/2/4.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="简单文件传输协议TFTP"><a href="#简单文件传输协议TFTP" class="headerlink" title="简单文件传输协议TFTP"></a>简单文件传输协议TFTP</h3><p>TFTP是很小且易于实现的文件传输协议，使用客户服务器方式，但使用UDP数据报，因此TFTP需要有自己的差错改正措施，<strong>TFTP只支持文件传输而不支持交互</strong>，TFTP没有庞大的命令集，没有列目录功能，不能对用户进行身份识别。</p>
+<p>TFTP的优点：</p>
+<ul>
+<li>可用于UDP环境。例如当需要程序或文件同时向许多机器下载时就往往需要使用TFTP</li>
+<li>TFTP代码所占的内存较小</li>
+</ul>
+<p>TFTP的主要特点：</p>
+<ul>
+<li>每次传输的数据报文中有512字节的数据，但最后一次可不足512字节</li>
+<li>数据报文按序编号，从1开始</li>
+<li>支持ASCII码或二进制传输</li>
+<li>可对文件进行读或写</li>
+<li>使用很简单的首部</li>
+</ul>
+<p>TFTP工作流程：TFTP客户进程发送一个请求报文给TFTP服务器进程，其熟知端口号为69。TFTP服务器进程选择一个新的端口和TFTP客户进程通信。若文件长度恰好为512字节整数倍，则文件传输完毕后，还必须在最后发送一个只含首部而无数据的数据报；若不是整数倍，则最后一个报文一定不足512字节，可作为文件结束标志。</p>
+<h2 id="Web-和-HTTP"><a href="#Web-和-HTTP" class="headerlink" title="Web 和 HTTP"></a>Web 和 HTTP</h2><h3 id="HTTP-概述"><a href="#HTTP-概述" class="headerlink" title="HTTP 概述"></a>HTTP 概述</h3><p>Web的应用层协议是超文本传输协议（HTTP），HTTP由两个程序实现：一个客户程序和一个服务器程序，通过交换HTTP报文进行会话，HTTP定义了这些报文的结构以及客户和服务器进行报文交换的方式。</p>
+<p>Web浏览器实现了HTTP的客户端（例如IE，Chrome），Web服务器实现了HTTP的服务端（例如Apache），它用于存储Web对象，每个对象由url寻址。</p>
+<p>当用户请求一个Web页面时，浏览器向服务器发出页面中所包含对象的HTTP请求报文，服务器接收到请求并用包含这些对象的HTTP响应报文进行响应。HTTP使用TCP作为传输层协议，HTTP客户首先发起一个与服务器的TCP连接，一旦连接建立，该浏览器和服务器进程就可以通过套接字接口访问TCP。</p>
+<p><img src="/images/cn-img/2/7.png" srcset="/img/loading.gif" lazyload></p>
+<p>HTTP是一个无状态协议，因为HTTP服务器并不保存关于客户的任何信息。例如一个特定的客户连续两次请求同一个对象，服务器会重新发送该对象。</p>
+<h3 id="非持续连接和持续连接"><a href="#非持续连接和持续连接" class="headerlink" title="非持续连接和持续连接"></a>非持续连接和持续连接</h3><p>当这种客户-服务器的交互是经TCP进行的时，应用程序的研制者需要做一个重要的决定，即每个请求&#x2F;响应对是经过一个单独的TCP连接发送（<strong>非持续连接</strong>），还是所有响应及请求经相同的TCP连接发送（<strong>持续连接</strong>）。总体来说，持续连接节省了各种系统资源。</p>
+<h3 id="HTTP-报文格式"><a href="#HTTP-报文格式" class="headerlink" title="HTTP 报文格式"></a>HTTP 报文格式</h3><p>通用首部字段：</p>
+<ul>
+<li>Cache-Control：用于控制缓存机制的行为</li>
+<li>Connection：控制是否使用持久连接。close表示请求&#x2F;响应之后关闭连接，keep-alive 表示保持连接持续使用</li>
+<li>Date：指示请求或响应的日期和时间</li>
+<li>Transfer-Encoding：表示消息主体采用的传输编码方式</li>
+<li>Upgrade：用于要求客户端或服务器使用不同的协议</li>
+</ul>
+<p>实体首部字段：</p>
+<ul>
+<li>Content-Type：指定实体主体的MIME类型，即告诉服务器或客户端返回的内容格式是什么（text&#x2F;html表示HTML文本，application&#x2F;json表示JSON格式数据，image&#x2F;png表示 PNG 图像）</li>
+<li>Content-Length：指示实体主体的长度</li>
+<li>Content-Encoding：指示实体主体使用的编码方式，如压缩格式</li>
+<li>Content-Language：指示实体主体的自然语言</li>
+<li>Content-Location：指示当前实体的建议位置，通常用来表示与实体相关的资源的URL</li>
+<li>Last-Modified：表示实体最后一次修改的时间</li>
+</ul>
+<p><strong>HTTP请求报文：</strong></p>
+<p>报文由ascii文本编写，每行由一个回车和换行符结束，最后一行后再附加一个回车和换行符。HTTP请求报文的第一行叫做请求行，后继的行叫做首部行。</p>
+<p>请求行有3个字段：方法字段，url字段和HTTP版本字段。</p>
+<p>方法字段：</p>
+<ul>
+<li>GET：获取资源而不修改它</li>
+<li>POST：向服务器提交数据，通常用于提交表单或上传文件，可能会更改服务器上的资源</li>
+<li>HEAD：获取资源的元数据（如响应头），不返回资源本身的内容</li>
+<li>PUT：更新或创建资源</li>
+<li>DELETE：删除资源</li>
+</ul>
+<p>首部行：</p>
+<ul>
+<li>Accept：指定客户端能够接受的响应内容类型。通常用于告诉服务器返回的内容类型，如text&#x2F;html或application&#x2F;json</li>
+<li>Accept-Encoding：指定客户端支持的内容编码（压缩格式），如gzip、deflate等</li>
+<li>Authorization：用于传递身份验证信息</li>
+<li>User-Agent：表示发出请求的客户端软件信息，通常是浏览器的名称和版本</li>
+<li>Host：指定请求的主机名和端口号</li>
+<li>Cookie：包含发送到服务器的Cookie数据</li>
+<li>Accept-Language：告诉服务器客户端能够接受的自然语言列表</li>
+</ul>
+<p>案例：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/somedir/page.html</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>www.someschool.edu<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">User-agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0<br><span class="hljs-attribute">Accept-language</span><span class="hljs-punctuation">: </span>fr<br></code></pre></td></tr></table></figure>
+
+<p>这个报文使用GET请求，请求对象&#x2F;somedir&#x2F;page.html，HTTP版本为HTTP&#x2F;1.1。首部行Host表明主机名称为<a target="_blank" rel="noopener" href="http://www.someschool.edu(该首部行提供的信息是为了web代理高速缓存所要求的),connection/">www.someschool.edu（该首部行提供的信息是为了Web代理高速缓存所要求的），Connection</a>: close表示服务器发送完被请求对象后就关闭这条连接。User-agent指明浏览器是Mozilla&#x2F;5.0，最后Accept-language表明用户想得到对象的法语版本（如果没有该版本就获得默认版本）。</p>
+<p>请求报文的通用格式：</p>
+<p><img src="/images/cn-img/2/8.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用GET方法时整个实体体为空，使用POST方法才使用实体体，当用户提交表单时，HTTP通常使用POST方法。当然，表单也可以使用GET方法，并在url中包括输入的数据。</p>
+<p><strong>HTTP响应报文：</strong></p>
+<p>响应报文有一个初始状态行，多个首部行，然后是实体体。状态行有3个字段：协议版本、状态码和相应状态信息。</p>
+<p>状态码和相应状态信息：</p>
+<ul>
+<li>2XX成功：请求被正常处理了<ul>
+<li>200 OK：客户端发来的请求在服务器端被正常处理了</li>
+<li>204 No Content：服务器接收的请求已成功处理，但在返回的响应报文中不含实体的主体部分</li>
+</ul>
+</li>
+<li>3XX重定向：浏览器需要执行某些特殊的处理以正确处理请求<ul>
+<li>301 Moved Permanently：永久性重定向</li>
+</ul>
+</li>
+<li>4XX客户端错误：客户端是发生错误的原因所在<ul>
+<li>400 Bad Request：请求报文中存在语法错误</li>
+<li>403 Forbidden：请求资源的访问被服务器拒绝了</li>
+<li>404 Not Found：服务器上无法找到请求的资源</li>
+</ul>
+</li>
+<li>5XX服务器错误：服务器本身发生错误<ul>
+<li>500 Internal Server Error：服务器端在执行请求时发生了错误</li>
+<li>503 Service Unavailable：服务器暂时处于超负载或正进行停机维护，无法处理请求</li>
+</ul>
+</li>
+</ul>
+<p>首部行：</p>
+<ul>
+<li>Set-Cookie：服务器用来向客户端设置Cookie</li>
+<li>Server：指示服务器软件的名称和版本号</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nix">HTTP<span class="hljs-symbol">/1.1</span> <span class="hljs-number">200</span> OK<br><span class="hljs-params">Connection:</span> close<br><span class="hljs-params">Date:</span> Tue, <span class="hljs-number">18</span> Aug <span class="hljs-number">2015</span> <span class="hljs-number">15</span>:<span class="hljs-number">44</span>:<span class="hljs-number">04</span> GMT<br><span class="hljs-params">Server:</span> Apache<span class="hljs-symbol">/2.2.3</span> (CentOS)<br><span class="hljs-params">Last-Modified:</span> Tue, <span class="hljs-number">18</span> Aug <span class="hljs-number">2015</span> <span class="hljs-number">15</span>:<span class="hljs-number">11</span>:<span class="hljs-number">03</span> GMT<br><span class="hljs-params">Content-Length:</span> <span class="hljs-number">6821</span><br><span class="hljs-params">Content-Type:</span> text<span class="hljs-symbol">/html</span><br>(data data data data data ...)<br></code></pre></td></tr></table></figure>
+
+<p>服务器使用Connection: close字段告诉客户，发送完报文后将关闭该TCP连接。Date指示服务器产生并发送响应报文的日期和时间（这个时间是服务器从文件系统中检索对象，将该对象插入响应报文，并发送响应报文的时间）。Server指示服务器的类型。Last-Modified指示了该对象创建或最后修改的时间与日期。</p>
+<p>响应报文的通用格式：</p>
+<p><img src="/images/cn-img/2/9.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="cookie、session-和-JWT-Json-Web-Token"><a href="#cookie、session-和-JWT-Json-Web-Token" class="headerlink" title="cookie、session 和 JWT (Json Web Token)"></a>cookie、session 和 JWT (Json Web Token)</h3><p>一个Web站点希望能够识别用户，为此，HTTP使用cookie，它允许站点对用户进行跟踪。</p>
+<p>cookie有4个组件：</p>
+<ul>
+<li>在HTTP响应报文中的一个cookie首部行</li>
+<li>在HTTP请求报文中的一个cookie首部行</li>
+<li>在用户端系统中保留的一个cookie文件，并由用户的浏览器进行管理</li>
+<li>位于Web站点的一个后端数据库</li>
+</ul>
+<p>具体的流程是，当客户端第一次发送向服务器发送请求报文时，是一个普通的HTTP请求报文，发送到服务器，服务器会生成一个Session ID存储在后端的数据库中，并在将响应报文中加入Set-cookie: Session ID字段，此时，客户端会存储这个cookie信息，等到下一次在发送请求报文就会携带Cookie: Session ID字段。</p>
+<p><img src="/images/cn-img/2/10.png" srcset="/img/loading.gif" lazyload></p>
+<p>在传统的cookie-session模式下，服务器通常需要存储Session数据，在分布式服务器中，还需要集中存储用户会话数据。JWT采用无状态的认证机制。用户每次请求时，会将已经加密的token发送到服务器，服务器验证这个token是否有效，而不需要维护会话数据。因此，服务器不需要存储状态，减少了存储负担，适合分布式架构（cookie-session模式还是主流）。</p>
+<p>JWT 的结构由Header（头部），Payload（载荷），Signature（签名）组成，每一部分是Base64编码后的内容。</p>
+<p>头部通常包含两部分信息：</p>
+<ul>
+<li>typ：标明这个是JWT，通常是 <code>JWT</code>。</li>
+<li>alg：标明签名使用的算法，比如 <code>HS256</code>（HMAC SHA-256）或 <code>RS256</code>（RSA SHA-256）。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;alg&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;HS256&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;typ&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;JWT&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>载荷是 JWT 的主体部分，通常包含需要传递的数据。它是一个 JSON 对象，其中包含了各种声明。这些声明有三种类型：</p>
+<ul>
+<li>注册声明（Registered Claims）：<ul>
+<li><code>iss</code>（Issuer）：发布者。</li>
+<li><code>sub</code>（Subject）：主题，一般用于表示用户的ID。</li>
+<li><code>aud</code>（Audience）：受众，表示该JWT是为哪个客户端或者服务设计的。</li>
+<li><code>exp</code>（Expiration）：过期时间，指定JWT的有效期。</li>
+<li><code>iat</code>（Issued At）：签发时间，表示JWT生成的时间。</li>
+<li><code>nbf</code>（Not Before）：生效时间，JWT在这个时间之前无效。</li>
+</ul>
+</li>
+<li>公共声明（Public Claims）：可以自由定义的字段，但应避免和已注册声明冲突。可以用于传递应用特定的信息。</li>
+<li>私有声明（Private Claims）：由双方定义，通常用于传递特定信息，但这些信息不会作为标准进行共享。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;sub&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1234567890&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;John Doe&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;iat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1516239022</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>为了确保JWT在传输过程中没有被篡改，我们需要对JWT的头部和载荷进行签名。签名是通过以下方式生成的：</p>
+<ul>
+<li>将头部和载荷分别进行 Base64 URL 编码。</li>
+<li>将编码后的头部和载荷用 <code>.</code> 连接起来。</li>
+<li>使用指定的算法（如 <code>HS256</code> 或 <code>RS256</code>）和密钥对连接后的字符串进行签名。</li>
+</ul>
+<p>假设我们使用的是 HMAC SHA-256 算法，签名的计算方法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">HMACSHA256(<br>  base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(payload),<br>  secretKey<br>)<br></code></pre></td></tr></table></figure>
+
+<p>将得到的三部分Base64编码用 <code>.</code> 串起来，就得到了token。</p>
+<h3 id="Web-缓存"><a href="#Web-缓存" class="headerlink" title="Web 缓存"></a>Web 缓存</h3><p>Web缓冲器也叫代理服务器，它能够代表初始Web服务器来满足HTTP请求网路实体，Web缓存器有自己的磁盘存储空间，并在存储空间中保存最近请求过的对象的副本。在因特网上部署Web缓存器有两个原因，首先Web缓存器可以大大减少对客户请求的响应时间，其次，Web缓存器能够大大减少一个机构的接入链路到因特网的通信量。</p>
+<p>因为Web缓存器保存了最近请求过的对象的副本，但对象可能是旧的，为了解决这个问题，HTTP有一种机制，允许缓存器证实它的对象是新的，这种机制就是条件GET，条件GET请求报文中包含一个If-modified-since的首部行。</p>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>HTTPS（安全超文本传输协议），是一种在HTTP基础上增加了增加了安全性的网络通信协议，它在客户端和服务器之间建立了一个加密通道，确保数据传输过程中的安全性和完整性。HTTPS的核心在于SSL（安全套接层）&#x2F;TLS（传输层安全协议）的加密技术。</p>
+<p><img src="/images/cn-img/2/11.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>HTTPS与HTTP的主要区别：</strong></p>
+<ul>
+<li>安全性：HTTP是一种明文传输协议，数据在传输过程中不进行加密，容易收到中间人攻击，导致数据泄露或篡改。HTTPS在HTTP的基础上增加了SSL&#x2F;TLS加密层，所以传输数据都经过加密处理，确保了数据传输的安全性和完整性。</li>
+<li>连接方式：HTTP使用TCP端口80通信，HTTPS使用TCP端口443进行通信。</li>
+<li>身份验证：HTTP不提供通信双方的身份验证机制，容易遭遇伪装攻击，HTTPS通过数字证书对服务器身份进行验证，确保客户端与正确的服务器进行通信，防止钓鱼网站攻击。</li>
+<li>性能：HTTP不涉及加密和解密过程，性能较好，HTTPS加入了加密解密，会有一定的性能开销。</li>
+<li>部署成本：HTTP无需部署成本，可以直接使用。HTTPS需要购买SSL证书。</li>
+</ul>
+<p><strong>HTTPS的工作原理：</strong></p>
+<p>首先了解一下对称加密：浏览器将加密套件列表和一个浏览器随机数发送给服务端，服务端选择一个加密套件，并也生成一个随机数，将二者返回给浏览器，然后浏览器和服务器互相确认一下。此时，浏览器和服务器将两个随机数使用加密套件生成密钥，再通过密钥进行加密的传输，保证数据的安全。（但是生成密钥的过程是明文，还是会被截获）</p>
+<p><img src="/images/cn-img/2/12.png" srcset="/img/loading.gif" lazyload></p>
+<p>再介绍一下非对称加密：非对称加密的密钥有两把，任何一把密钥对数据进行加密，必须使用另一把密钥才能进行解密，自己不能对自己加密的数据进行解密。浏览器将加密套件列表发送给服务端，服务端选择一个加密套件，将加密套机和服务端的一个公钥返回给浏览器，然后浏览器和服务器互相确认一下。（这种方式容易受到中间人攻击，并且效率较低）</p>
+<p><img src="/images/cn-img/2/13.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们先讨论效率上的优化：</p>
+<p>我们可以采用先使用非对称加密，再用对称加密的混合加密方式传输数据，具体流程是浏览器先向服务端发送加密套件列表，非对称加密套件列表和浏览器随机数，服务端选择加密套件并将公钥，加密套件和服务端随机数发送给浏览器，浏览器结合公钥和两个随机数生成pre-master随机数，再将加密后的pre-master随机数发送给服务端，然后浏览器和服务端通过这3个随机数创建一个新的密钥，再使用这个密钥进行对称加密。</p>
+<p><img src="/images/cn-img/2/14.png" srcset="/img/loading.gif" lazyload></p>
+<p>为了防止中间人攻击，我们需要证书颁发机构（CA）进行第三方认证，确定我们要访问的服务器是正确的，使用CA颁发的证书，具体流程是浏览器先向服务端发送加密套件列表，非对称加密套件列表和浏览器随机数，服务端选择加密套件并将证书，加密套件和服务端随机数发送给浏览器，浏览器验证证书，并结合证书中的公钥和两个随机数生成pre-master随机数，再将加密后的pre-master随机数发送给服务端，然后浏览器和服务端通过这3个随机数创建一个新的密钥，再使用这个密钥进行对称加密。</p>
+<p><img src="/images/cn-img/2/15.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>HTTPS性能优化：</strong></p>
+<h3 id="HTTP-1-0-HTTP-1-1-HTTP-2-和-HTTP-3"><a href="#HTTP-1-0-HTTP-1-1-HTTP-2-和-HTTP-3" class="headerlink" title="HTTP&#x2F;1.0, HTTP&#x2F;1.1, HTTP&#x2F;2 和 HTTP&#x2F;3"></a>HTTP&#x2F;1.0, HTTP&#x2F;1.1, HTTP&#x2F;2 和 HTTP&#x2F;3</h3><p>（这里只做简单介绍）</p>
+<p>HTTP&#x2F;1.0和HTTP&#x2F;1.1都是是基于ASCII文本的协议，相比于HTTP&#x2F;1.0，HTTP&#x2F;1.1支持长连接，从而减少因多次TCP连接带来的损失，并且支持缓存优化，使用Cathe-Control头管理缓存的使用。但存在队头阻塞的问题。</p>
+<p>HTTP2采用二进制格式进行通信，HTTP&#x2F;2采取多路复用，允许多个请求和响应共享一个TCP连接，多个请求和响应并行发送，解决了队头阻塞的问题，HTTP&#x2F;2还使用HPACK算法对HTTP头部进行压缩，减少因重复头部信息带来的数据传输量，HTTP&#x2F;2还引入流控制机制，可以更精确的控制每个流带宽的分配，从而提高性能。</p>
+<p>HTTP3基于QUIC协议（基于UDP），解决了TCP的许多限制，支持0-RTT连接建立，也支持多路复用，因为是基于UDP的，所以不会受到TCP连接阻塞的限制。HTTP3默认是基于TLS1.3加密的，更加安全。</p>
+<h2 id="电子邮件"><a href="#电子邮件" class="headerlink" title="电子邮件"></a>电子邮件</h2><h3 id="电子邮件概述"><a href="#电子邮件概述" class="headerlink" title="电子邮件概述"></a>电子邮件概述</h3><p>电子邮件是互联网上使用最多的和最受欢迎的一种应用。电子邮件把邮件发送到收件人使用的邮件服务器，并放在其中的收件人邮箱中，收件人可以在自己使用的邮件服务器中进行读取。</p>
+<p>电子邮件的两个最重要的标准是<strong>简单邮件传输协议SMTP</strong>和<strong>互联网文本报文格式</strong></p>
+<p>由于SMTP只能传输可打印的7为ASCII码邮件，后又提出<strong>通用互联网邮件扩充MIME</strong>，MIME在其邮件首部中说明了邮件的数据类型（如文本、声音、图像等）。</p>
+<p>一个电子邮件系统应具有三个主要组成构件，就是用户代理、邮件服务器、邮件发送协议（如SMTP）和邮件读取协议（如POP3）。</p>
+<p><img src="/images/cn-img/2/5.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="简单邮件传输协议-SMTP"><a href="#简单邮件传输协议-SMTP" class="headerlink" title="简单邮件传输协议 SMTP"></a>简单邮件传输协议 SMTP</h3><p>SMTP通信的三个阶段：</p>
+<ul>
+<li>连接建立：发件人的邮件发送到发送方邮件服务器的邮件缓存后，SMTP客户就每隔一定的时间对邮件缓存扫描一次，如果发现邮件，就用SMTP熟知的端口号25与接收方邮件服务器的SMTP服务器建立TCP连接（SMTP不使用中间的邮件服务器，TCP连接总是在发送方和接收方这两个邮件服务器之间进行之间连接）。</li>
+<li>邮件传送：从MAIL命令开始，MAIL命令后面有发件人的地址。下面跟着一个或多个RCPT命令，取决于把同一个邮件发送给一个或多个收件人。在下面是DATA命令，表示要开始传送邮件的内容了。</li>
+<li>连接释放：邮件发送完毕后发送QUIT命令，SMTP服务器返回服务关闭的信息，表示SMTP同意释放TCP连接，邮件传送过程结束。</li>
+</ul>
+<h3 id="邮件读取协议-POP3-和-IMAP"><a href="#邮件读取协议-POP3-和-IMAP" class="headerlink" title="邮件读取协议 POP3 和 IMAP"></a>邮件读取协议 POP3 和 IMAP</h3><p>POP3使用客户服务器的工作方式，在接收邮件的计算机中用户代理必须运行POP3客户程序，而在收件人所连接的ISP的邮件服务器中则运行POP3服务器程序。</p>
+<p>POP3协议的一个特点就是只要用户从POP3服务器读取了邮件，POP3服务器就把该邮件删除，但这是不方便的，后来POP3进行了扩充，让用户可以实现设置邮件读取后在POP3服务器中存放的时间。</p>
+<p>IMAP协议比POP3复杂的多，它也使用客户服务器的工作方式，在使用IMAP时，在用户计算机运行IMAP客户程序，然后与接收方的邮件服务器上的IMAP服务器程序建立TCP连接。用户可以在自己的计算机上操纵邮件服务器的邮箱，因此IMAP是一个联机协议。当用户计算机上的IMAP客户程序打开IMAP服务器的邮箱时，用户就可以看到邮件的首部。若用户打开某个邮件，则该邮件才传到用户的计算机上。在用户未发出删除邮件的命令之前，IMAP服务器邮箱中的邮件一直保存着。此外，IMAP还允许收件人只读取邮件的某一个部分（例如读取一个带有视频附件的邮件）。</p>
+<h3 id="基于万维网的电子邮件"><a href="#基于万维网的电子邮件" class="headerlink" title="基于万维网的电子邮件"></a>基于万维网的电子邮件</h3><p>用户在浏览器中浏览各种信息需要使用HTTP协议，因此在浏览器和互联网上的邮件服务器之间传送邮件时，仍使用HTTP协议，但在各邮件服务器之间传送邮件时，仍使用SMTP协议。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/net/" class="category-chain-item">net</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/net/" class="print-no-link">#net</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86/" class="print-no-link">#计算机网络知识</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机网络-应用层</div>
+      <div>https://nnstrings.github.io/2025/06/29/net/计算机网络-应用层/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Strings Ninety-nine</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/21/design-pattern/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="单例模式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">单例模式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/29/net/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E6%A6%82%E8%BF%B0/" title="计算机网络-概述">
+                        <span class="hidden-mobile">计算机网络-概述</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

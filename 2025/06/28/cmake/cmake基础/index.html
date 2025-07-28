@@ -1,0 +1,1049 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Strings Ninety-nine">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="cmake基础知识，包括内置变量、常见命令、生成器表达式、命令行参数等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cmake 基础">
+<meta property="og:url" content="https://nnstrings.github.io/2025/06/28/cmake/cmake%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="cmake基础知识，包括内置变量、常见命令、生成器表达式、命令行参数等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-28T03:43:20.000Z">
+<meta property="article:modified_time" content="2025-07-21T14:14:13.325Z">
+<meta property="article:author" content="Strings Ninety-nine">
+<meta property="article:tag" content="cmake">
+<meta property="article:tag" content="cpp">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>cmake 基础 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nnstrings.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="cmake 基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-28 11:43" pubdate>
+          2025年6月28日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          45 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">cmake 基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>cmake基础知识，包括内置变量、常见命令、生成器表达式、命令行参数等。</p>
+<span id="more"></span>
+
+<h2 id="cmake-常见内置变量"><a href="#cmake-常见内置变量" class="headerlink" title="cmake 常见内置变量"></a>cmake 常见内置变量</h2><h3 id="构建目录和工作目录"><a href="#构建目录和工作目录" class="headerlink" title="构建目录和工作目录"></a>构建目录和工作目录</h3><ul>
+<li>CMAKE_BINARY_DIR, PROJECT_BINARY_DIR, &lt;projectname&gt;_BINARY_DIR: 构建目录</li>
+<li>CMAKE_SOURCE_DIR, PROJECT_SOURCE_DIR, &lt;projectname&gt;_SOURCE_DIR: 项目工作目录</li>
+<li>CMAKE_CURRENT_SOURCE_DIR: 当前处理的 CMakeLists.txt 所在的路径</li>
+<li>CMAKE_CURRENT_LIST_FILE: 当前处理的 CMakeLists.txt 的完整路径</li>
+<li>CMAKE_CURRENT_LIST_LINE: 输出这个变量所在的行</li>
+</ul>
+<h3 id="项目信息"><a href="#项目信息" class="headerlink" title="项目信息"></a>项目信息</h3><ul>
+<li>PROJECT_NAME: 返回通过 <code>project</code> 指令定义的项目名称</li>
+<li>PROJECT_IS_TOP_LEVEL: 项目是否是顶层目录</li>
+</ul>
+<h3 id="构建类型"><a href="#构建类型" class="headerlink" title="构建类型"></a>构建类型</h3><ul>
+<li>CMAKE_BUILD_TYPE: 单一配置生成器（Makefile, Ninja）的构建类型，主要就是 <code>Debug</code> 和 <code>Release</code></li>
+<li>CMAKE_CONFIGURATION_TYPES: 多配置生成器（Visual Studio, Xcode, Ninja Multi-Config）的构建类型，主要就是 <code>Debug</code> 和 <code>Release</code></li>
+</ul>
+<h3 id="C-编译选项"><a href="#C-编译选项" class="headerlink" title="C++ 编译选项"></a>C++ 编译选项</h3><ul>
+<li>CMAKE_CXX_STANDARD: 指定要使用的 C++ 标准版本（ 98, 11, 14, 17, 20）</li>
+<li>CMAKE_CXX_STANDARD_REQUIRED: 指定是否必须使用指定的 C++ 标准版本。如果设置为 ON，并且编译器不支持指定的标准版本，CMake 将报错并停止配置过程</li>
+<li>CMAKE_CXX_EXTENSIONS: 是否启用编译器扩展</li>
+</ul>
+<h3 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h3><ul>
+<li>CMAKE_SYSTEM_NAME: CMake 要构建的操作系统的名称（例如 Android, DOS, Linux, OpenBSD, Windows）</li>
+<li>CMAKE_&lt;LANG&gt;_COMPILER_ID: 编译器的名称（例如 GNU, Clang, MSVC）</li>
+</ul>
+<h2 id="cmake-常见命令"><a href="#cmake-常见命令" class="headerlink" title="cmake 常见命令"></a>cmake 常见命令</h2><h3 id="cmake-minimum-required-命令"><a href="#cmake-minimum-required-命令" class="headerlink" title="cmake_minimum_required 命令"></a>cmake_minimum_required 命令</h3><p>定义 CMake 的最低或最低和最高兼容版本范围。</p>
+<p>语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION &lt;min&gt;[...&lt;policy_max&gt;] [FATAL_ERROR])<br></code></pre></td></tr></table></figure>
+
+<h3 id="message-命令"><a href="#message-命令" class="headerlink" title="message 命令"></a>message 命令</h3><p>语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">message</span>([&lt;mode&gt;] <span class="hljs-string">&quot;message to display&quot;</span> ...)<br></code></pre></td></tr></table></figure>
+
+<p>其中，mode 是可选的，可以指定消息的类型。常见的消息类型包括：</p>
+<ul>
+<li>STATUS：非重要消息，通常用于显示一般信息。</li>
+<li>WARNING：警告消息，CMake 会继续执行。</li>
+<li>AUTHOR_WARNING：开发者警告，CMake 会继续执行。</li>
+<li>SEND_ERROR：错误消息，CMake 会继续执行但会跳过生成步骤。</li>
+<li>FATAL_ERROR：致命错误消息，CMake 会终止所有处理过程。</li>
+</ul>
+<p>其中，字符串信息可以包含变量信息。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">message</span>(STATUS <span class="hljs-string">&quot;CMAKE_SOURCE_DIR: $&#123;CMAKE_SOURCE_DIR&#125;&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="include-命令"><a href="#include-命令" class="headerlink" title="include 命令"></a>include 命令</h3><p>用于加载并执行指定的 CMake 脚本文件中的命令，如果希望在找不到指定文件时 CMake 不报错，而是继续执行，可以使用 <code>OPTIONAL</code> 关键字。</p>
+<p>语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">include</span>(path/to/your/file1.cmake)<br><span class="hljs-keyword">include</span>(OPTIONAL path/to/your/file2.cmake)<br></code></pre></td></tr></table></figure>
+
+<h3 id="file-命令"><a href="#file-命令" class="headerlink" title="file 命令"></a>file 命令</h3><p>文件操作命令，此命令专用于需要访问文件系统的文件和路径操作。</p>
+<p>将文件 filename 读到变量 variable 中</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(READ &lt;filename&gt; &lt;variable&gt; [OFFSET &lt;offset&gt;] [LIMIT &lt;limit&gt;] [HEX])<br><span class="hljs-keyword">file</span>(READ <span class="hljs-string">&quot;README.md&quot;</span> README_CONTENT)<br></code></pre></td></tr></table></figure>
+
+<p>将内容 content 写入文件 filename</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(WRITE &lt;filename&gt; &lt;content&gt;...)<br><span class="hljs-keyword">file</span>(WRITE <span class="hljs-string">&quot;output.txt&quot;</span> <span class="hljs-string">&quot;Hello, CMake!&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>生成与 globbing-expressions 匹配的文件列表并将其存储到 variable 中，globbing-expressions 与正则表达式类似，但更简单</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(GLOB &lt;variable&gt; [LIST_DIRECTORIES <span class="hljs-keyword">true</span>|<span class="hljs-keyword">false</span>] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)<br><span class="hljs-keyword">file</span>(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS] [LIST_DIRECTORIES <span class="hljs-keyword">true</span>|<span class="hljs-keyword">false</span>] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS] &lt;globbing-expressions&gt;...)<br></code></pre></td></tr></table></figure>
+
+<p>如果指定了 RELATIVE 标志，则结果将作为给定路径的相对路径返回，如果 LIST_DIRECTORIES 设置为 false，则结果中会省略目录。</p>
+<p>GLOB_RECURSE 模式将遍历匹配目录的所有子目录并匹配文件，默认情况下，GLOB_RECURSE 会从结果列表中省略目录。</p>
+<h3 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h3><p><code>set</code> 命令用于设置变量的值。它可以用来定义普通的变量、缓存变量（即保存在 CMakeCache.txt 文件中的变量）以及目标属性等。</p>
+<p><strong>设置普通变量：</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])<br></code></pre></td></tr></table></figure>
+
+<p>&lt;variable&gt; 是要设置的变量名，&lt;value&gt;… 是变量的值，可以是一个或多个值，[PARENT_SCOPE] 可以将变量加到父目录。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(MY_VARIABLE <span class="hljs-string">&quot;hello, cmake!&quot;</span>)<br><span class="hljs-keyword">message</span>(STATUS <span class="hljs-string">&quot;MY_VAR: $&#123;MY_VARIABLE&#125;&quot;</span>)<br><span class="hljs-keyword">set</span>(MY_LIST <span class="hljs-string">&quot;item1&quot;</span> <span class="hljs-string">&quot;item2&quot;</span> <span class="hljs-string">&quot;item3&quot;</span>)<br><span class="hljs-keyword">foreach</span>(item IN LISTS MY_LIST)<br>    <span class="hljs-keyword">message</span>(STATUS <span class="hljs-string">&quot;List item: $&#123;item&#125;&quot;</span>)<br><span class="hljs-keyword">endforeach</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>设置缓存变量：</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(&lt;variable&gt; &lt;value&gt;... CACHE &lt;type&gt; &lt;docstring&gt; [FORCE])<br></code></pre></td></tr></table></figure>
+
+<p>&lt;variable&gt; 是要设置的变量名，&lt;value&gt;… 是变量的值，可以是一个或多个值，&lt;type&gt; 是变量的类型，&lt;docstring&gt; 是描述信息，[FORCE] 是强制覆盖现有的缓存值。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(CMAKE_BUILD_TYPE <span class="hljs-string">&quot;Release&quot;</span> CACHE <span class="hljs-keyword">STRING</span> <span class="hljs-string">&quot;Choose Release or Debug&quot;</span> FORCE)<br></code></pre></td></tr></table></figure>
+
+<h3 id="option-命令"><a href="#option-命令" class="headerlink" title="option 命令"></a>option 命令</h3><p>提供一个用户可以选择性选择的布尔选项。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">option</span>(&lt;variable&gt; <span class="hljs-string">&quot;&lt;help_text&gt;&quot;</span> [value])<br></code></pre></td></tr></table></figure>
+
+<p>&lt;value&gt; 如果没有提供初始值 ，则布尔值 <code>OFF</code> 是默认值。如果 &lt;variable&gt; 已设置为正常或缓存变量，则该命令不执行任何操作。</p>
+<h3 id="find-package-命令"><a href="#find-package-命令" class="headerlink" title="find_package 命令"></a>find_package 命令</h3><p><code>find_package</code> 用于查找和加载外部库或模块。它可以帮助你自动发现并配置项目依赖的第三方库，从而简化项目的配置过程。</p>
+<p><code>find_package</code> 工作机制：</p>
+<ul>
+<li>查找配置文件：cmake 首先尝试查找包的配置文件（如 <code>Find&lt;PackageName&gt;.cmake</code> 或 <code>&lt;PackageName&gt;Config.cmake</code>）</li>
+<li>加载配置文件：找到配置文件后，cmake 会加载该文件，并根据其中的定义设置相应的变量和目标</li>
+<li>设置变量和目标：配置文件通常会设置一些变量（如 <code>$&#123;PackageName&#125;_FOUND</code>），并导入目标（如 <code>target_link_libraries</code>）</li>
+</ul>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(&lt;PackageName&gt; [version] [EXACT] [QUIET] [REQUIRED] [[COMPONENTS] [components...]])<br></code></pre></td></tr></table></figure>
+
+<p>其中，&lt;PackageName&gt; 为要查找的包名称，[version] 是指定所需的版本号，[EXACT] 表示如果指定了版本号，则要求版本必须完全匹配，[QUIET] 表示如果找不到包，不输出错误信息，[REQUIRED] 表示如果找不到包，则中止配置过程并显示错误信息，[[COMPONENTS] [components…]] 指包的特定组件。</p>
+<p>下面举一些常用的 C++ 库</p>
+<p>使用线程库 Threads</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(Threads REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(main PUBLIC Threads::Threads)<br></code></pre></td></tr></table></figure>
+
+<p>使用并行库 TBB</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(TBB REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(main PUBLIC TBB::tbb)<br></code></pre></td></tr></table></figure>
+
+<p>使用 Boost 库中的 <code>filesystem</code> 和 <code>system</code> 组件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(Boost <span class="hljs-number">1.65</span> REQUIRED COMPONENTS filesystem system)<br><span class="hljs-keyword">target_link_libraries</span>(main Boost::Boost Boost::filesystem Boost::system)<br></code></pre></td></tr></table></figure>
+
+<p>使用线性代数库 Eigen3</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(Eigen3 REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(main Eigen3::Eigen)<br></code></pre></td></tr></table></figure>
+
+<p>使用 opencv</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(OpenCV <span class="hljs-number">4.5</span> REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(main <span class="hljs-variable">$&#123;OpenCV_LIBS&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>使用压缩库 zlib</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(ZLIB REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(main ZLIB::ZLIB)<br></code></pre></td></tr></table></figure>
+
+<p>使用 Qt5</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(Qt5 COMPONENTS Core Widgets REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(main Qt5::Core Qt5::Widgets)<br></code></pre></td></tr></table></figure>
+
+<p>使用加密库 openssl</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(OpenSSL REQUIRED)<br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;OPENSSL_INCLUDE_DIR&#125;</span>)<br><span class="hljs-keyword">target_link_libraries</span>(MyExecutable <span class="hljs-variable">$&#123;OPENSSL_LIBRARIES&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="list-命令"><a href="#list-命令" class="headerlink" title="list 命令"></a>list 命令</h3><p><code>list</code> 命令用于操作字符串列表。它提供了一系列子命令来创建、修改和查询列表中的元素。</p>
+<ul>
+<li>APPEND：追加元素</li>
+<li>INSERT：插入元素</li>
+<li>REMOVE_ITEM：移除指定元素</li>
+<li>REMOVE_AT：按索引移除元素</li>
+<li>REMOVE_DUPLICATES：移除重复元素</li>
+<li>LENGTH：获取列表长度</li>
+<li>GET：获取指定索引处的元素</li>
+<li>FIND：查找元素的索引</li>
+<li>JOIN：连接列表元素为字符串</li>
+<li>SUBLIST：提取子列表</li>
+<li>REVERSE：反转列表</li>
+<li>SORT：对列表进行排序</li>
+</ul>
+<p>追加一个新文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(SOURCE_FILES <span class="hljs-string">&quot;main.cpp&quot;</span> <span class="hljs-string">&quot;helper.cpp&quot;</span> <span class="hljs-string">&quot;utils.cpp&quot;</span>)<br><span class="hljs-keyword">list</span>(APPEND SOURCE_FILES <span class="hljs-string">&quot;new_feature.cpp&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="add-library-命令"><a href="#add-library-命令" class="headerlink" title="add_library 命令"></a>add_library 命令</h3><p><code>add_library</code> 是用于定义库目标（library target）的关键命令。通过 add_library，可以创建静态库、共享库（动态库）、模块库或接口库，并将源文件编译成这些库。</p>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(&lt;name&gt; [STATIC | SHARED | MODULE | INTERFACE] [EXCLUDE_FROM_ALL] &lt;sources&gt;...)<br></code></pre></td></tr></table></figure>
+
+<p>其中，&lt;name&gt; 是库的目标名称，[STATIC | SHARED | MODULE | INTERFACE] 指定库的类型（可选，默认为静态库），[EXCLUDE_FROM_ALL] 可以将该库从所有构建目标中排除（可选），&lt;sources&gt; 是库的源文件列表。</p>
+<ul>
+<li>静态库（STATIC）：通常以 <code>.a</code> 或 <code>.lib</code> 为扩展名。它包含了编译后的对象文件，这些对象文件在链接时直接复制到目标可执行文件中。</li>
+<li>共享库（SHARED）：通常以 <code>.so</code>、<code>.dll</code> 或 <code>.dylib</code> 为扩展名。它包含了编译后的代码，在运行时被加载，而不是直接包含在最终的可执行文件中。</li>
+<li>模块库（MODULE）：模块库也是一种共享库，但它通常是被设计为插件或模块化系统的一部分。它与共享库类似，但更侧重于动态加载，且不需要遵循标准的共享库接口。</li>
+<li>接口库（INTERFACE）：通常用于定义库的接口、编译选项、包含目录、链接的库等，并且可以被其他目标引用。</li>
+</ul>
+<p>静态库&#x2F;共享库例子：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lua">project/<br>│── CMakeLists.txt<br>│── main.cpp<br>│── <span class="hljs-built_in">math</span>/<br>│   │── CMakeLists.txt<br>│   │── <span class="hljs-built_in">math</span>.h<br>│   │── <span class="hljs-built_in">math</span>.cpp<br></code></pre></td></tr></table></figure>
+
+<p>math&#x2F;CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(<span class="hljs-keyword">math</span> STATIC/SHARED <span class="hljs-keyword">math</span>.cpp)<br><span class="hljs-keyword">target_include_directories</span>(<span class="hljs-keyword">math</span> PUBLIC <span class="hljs-variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.18</span>)<br><span class="hljs-keyword">project</span>(StaticLibExample)<br><br><span class="hljs-keyword">add_subdirectory</span>(<span class="hljs-keyword">math</span>)<br><br><span class="hljs-keyword">add_executable</span>(main main.cpp)<br><span class="hljs-keyword">target_link_libraries</span>(main PRIVATE <span class="hljs-keyword">math</span>)<br></code></pre></td></tr></table></figure>
+
+<p>模块库例子见 <code>module-example</code> 文件夹。</p>
+<p>该命令还可以为 <code>&lt;target&gt;</code> 命名，命名为 <code>&lt;name&gt;</code></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(&lt;name&gt; ALIAS &lt;<span class="hljs-keyword">target</span>&gt;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="target-compile-definitions-命令"><a href="#target-compile-definitions-命令" class="headerlink" title="target_compile_definitions 命令"></a>target_compile_definitions 命令</h3><p><code>target_compile_definitions</code> 用于为目标添加编译定义（compile definitions）的命令（可以直接理解成为目标添加宏定义）。</p>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_definitions</span>(&lt;<span class="hljs-keyword">target</span>&gt;<br>  &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...]<br>  [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])<br></code></pre></td></tr></table></figure>
+
+<p>其中，<code>&lt;target&gt;</code> 为目标名称（可以是库、可执行文件等）。<code>PRIVATE</code> 表示仅应用于当前目标。<code>PUBLIC</code> 表示应用于当前目标及其依赖的目标。<code>INTERFACE</code> 仅应用于依赖于当前目标的其他目标（适用于接口库）。<code>&lt;definition&gt;</code>：要添加的编译定义，格式为 <code>NAME</code> 或 <code>NAME=value</code>。</p>
+<p>属性可以作用一个或多个变量，每个变量前都可以添加属性</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># TEST 和 NDEBUG 都是 PRIVATE 属性的</span><br><span class="hljs-keyword">target_compile_definitions</span>(main PRIVATE <span class="hljs-keyword">TEST</span> NDEBUG)<br><span class="hljs-comment"># TEST 是 PRIVATE 属性的，NDEBUG 是 PUBLIC 属性的</span><br><span class="hljs-keyword">target_compile_definitions</span>(main PRIVATE <span class="hljs-keyword">TEST</span> PUBLIC NDEBUG)<br></code></pre></td></tr></table></figure>
+
+<h3 id="target-compile-options-命令"><a href="#target-compile-options-命令" class="headerlink" title="target_compile_options 命令"></a>target_compile_options 命令</h3><p><code>target_compile_options</code> 用于为目标添加编译器选项。通过这个命令可以在构建过程中为特定的目标（如可执行文件、库等）设置编译器标志和选项。这些选项会在编译该目标时传递给编译器，从而控制代码的编译行为。</p>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_options</span>(&lt;<span class="hljs-keyword">target</span>&gt; [BEFORE]<br>  &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...]<br>  [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...])<br></code></pre></td></tr></table></figure>
+
+<p><code>[BEFORE]</code> 是可选参数，表示将选项插入到现有选项列表的前面（默认情况下会追加到末尾）。</p>
+<p>例如我们现在要开启所有警告并将警告视为错误，并要求在 Linux 和 Windows 上都有效。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_options</span>(main PUBLIC $&lt;$&lt;PLATFORM_ID:Windows&gt;:/W4 /WX&gt;<br>                                   $&lt;$&lt;PLATFORM_ID:Linux&gt;:-Wall -Werror)<br></code></pre></td></tr></table></figure>
+
+<h3 id="target-include-directories-命令"><a href="#target-include-directories-命令" class="headerlink" title="target_include_directories 命令"></a>target_include_directories 命令</h3><p><code>target_include_directories</code> 用于为目标指定包含目录（include directories）的命令。通过这个命令可以告诉编译器在编译特定目标时应该搜索哪些目录以查找头文件。</p>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_include_directories</span>(&lt;<span class="hljs-keyword">target</span>&gt; [BEFORE] [SYSTEM] [INTERFACE | PUBLIC | PRIVATE] &lt;directory&gt; ...)<br></code></pre></td></tr></table></figure>
+
+<p>其中，<code>[BEFORE]</code> 为可选参数，表示将目录插入到现有目录列表的前面（默认情况下会追加到末尾）。<br><code>[SYSTEM]</code> 为可选参数，表示这些目录是系统目录，某些编译器会对这些目录中的警告进行特殊处理。</p>
+<p>添加公共的包含目录：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(MyLibrary STATIC src/library.cpp)<br><span class="hljs-keyword">target_include_directories</span>(MyLibrary PUBLIC <span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="hljs-keyword">include</span>)<br></code></pre></td></tr></table></figure>
+
+<p>针对不同的构建类型（如 Debug 或 Release）设置不同的包含目录：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_include_directories</span>(MyExecutable PRIVATE<br>    $&lt;$&lt;CONFIG:Debug&gt;:<span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/debug/<span class="hljs-keyword">include</span>&gt;<br>    $&lt;$&lt;CONFIG:Release&gt;:<span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/release/<span class="hljs-keyword">include</span>&gt;<br>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="target-link-libraries-命令"><a href="#target-link-libraries-命令" class="headerlink" title="target_link_libraries 命令"></a>target_link_libraries 命令</h3><p><code>target_link_libraries</code> 用于为目标指定链接库的关键命令。通过该命令，你可以告诉编译器在构建目标（如可执行文件或库）时需要链接哪些库。这使得项目能够正确地引用外部依赖项或内部模块。</p>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>(&lt;<span class="hljs-keyword">target</span>&gt; [BEFORE] [PRIVATE|PUBLIC|INTERFACE] &lt;library&gt;...&gt;)<br></code></pre></td></tr></table></figure>
+
+<p>链接单个库和链接多个库：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_executable</span>(MyExecutable main.cpp)<br><br><span class="hljs-keyword">add_library</span>(MyLibrary STATIC library.cpp)<br><span class="hljs-keyword">target_link_libraries</span>(MyExecutable PRIVATE MyLibrary)<br><br><span class="hljs-keyword">add_library</span>(MyLibraryA STATIC libraryA.cpp)<br><span class="hljs-keyword">add_library</span>(MyLibraryB STATIC libraryB.cpp)<br><span class="hljs-keyword">target_link_libraries</span>(MyExecutable PRIVATE MyLibraryA MyLibraryB)<br></code></pre></td></tr></table></figure>
+
+<p>链接导出集：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>(MyExecutable PRIVATE MyLibrary::MyLibrary)<br></code></pre></td></tr></table></figure>
+
+<h3 id="target-precompile-headers-命令"><a href="#target-precompile-headers-命令" class="headerlink" title="target_precompile_headers 命令"></a>target_precompile_headers 命令</h3><h3 id="configure-file-命令"><a href="#configure-file-命令" class="headerlink" title="configure_file 命令"></a>configure_file 命令</h3><p><code>configure_file</code> 用于生成配置文件的命令。它允许你将模板文件中的内容根据 CMake 变量的值进行替换，并生成目标文件。这在构建系统中非常有用，尤其是在需要生成配置头文件（如 config.h）或脚本文件时。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">configure_file</span>(&lt;input&gt; &lt;output&gt; [&lt;permissions&gt;]<br>               [COPYONLY]<br>               [ESCAPE_QUOTES]<br>               [@ONLY]<br>               [NEWLINE_STYLE [UNIX|DOS|WIN32|CRLF|LF]])<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>&lt;input&gt;</code>：输入文件路径（通常是模板文件）。</li>
+<li><code>&lt;output&gt;</code>：输出文件路径（生成的目标文件）。</li>
+<li><code>COPYONLY</code>：如果指定此选项，则不进行变量替换，直接复制文件。</li>
+<li><code>ESCAPE_QUOTES</code>：转义模板文件中的双引号（”），以防止它们被 CMake 解析为字符串分隔符。</li>
+<li><code>@ONLY</code>：仅替换以 @VAR@ 形式定义的变量，忽略 ${VAR} 形式的变量。</li>
+<li><code>NEWLINE_STYLE</code>：指定输出文件的换行风格，支持以下值：<ul>
+<li>UNIX 或 LF：使用 Unix 风格的换行符（\n）。</li>
+<li>DOS 或 WIN32 或 CRLF：使用 Windows 风格的换行符（\r\n）。</li>
+</ul>
+</li>
+</ul>
+<p>生成配置头文件 <code>config.h</code>，其中包含一些编译时的配置信息。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(ENABLE_FEATURE_X <span class="hljs-keyword">ON</span>)<br><span class="hljs-keyword">set</span>(VERSION_MAJOR <span class="hljs-number">1</span>)<br><span class="hljs-keyword">set</span>(VERSION_MINOR <span class="hljs-number">0</span>)<br><br><span class="hljs-keyword">configure_file</span>(<br>    <span class="hljs-variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/config.h.in<br>    <span class="hljs-variable">$&#123;CMAKE_BINARY_DIR&#125;</span>/config.h<br>)<br><br><span class="hljs-keyword">target_include_directories</span>(MyExecutable PRIVATE <span class="hljs-variable">$&#123;CMAKE_BINARY_DIR&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// config.h.in</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> VERSION_MAJOR @VERSION_MAJOR@</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> VERSION_MINOR @VERSION_MINOR@</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> @ENABLE_FEATURE_X@</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FEATURE_X_ENABLED 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FEATURE_X_ENABLED 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// config.h</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> VERSION_MAJOR 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> VERSION_MINOR 0</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FEATURE_X_ENABLED 1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="install-命令"><a href="#install-命令" class="headerlink" title="install 命令"></a>install 命令</h3><p><code>install</code> 命令是 CMake 中用于指定安装规则的关键命令。<code>install</code> 命令可以定义哪些文件和目标需要在构建完成后被复制到指定的安装目录中。这使得项目可以方便地进行打包、部署和分发。</p>
+<p>基本语法：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(TARGETS &lt;<span class="hljs-keyword">target</span>&gt;... [...])<br><span class="hljs-keyword">install</span>(DIRECTORY &lt;dir&gt;... [...])<br><span class="hljs-keyword">install</span>(FILES &lt;<span class="hljs-keyword">file</span>&gt;... [...])<br><span class="hljs-keyword">install</span>(PROGRAMS &lt;<span class="hljs-keyword">file</span>&gt;... [...])<br><span class="hljs-keyword">install</span>(<span class="hljs-keyword">EXPORT</span> &lt;<span class="hljs-keyword">export</span>-name&gt; [...])<br><span class="hljs-keyword">install</span>(CODE &lt;code&gt;)<br><span class="hljs-keyword">install</span>(RUNTIME_DEPENDENCY_SET &lt;setName&gt; [...])<br></code></pre></td></tr></table></figure>
+
+<p><strong>安装目标（TARGETS）</strong></p>
+<p><code>install(TARGETS ...)</code> 用于指定将哪些构建目标（如可执行文件、库等）安装到指定位置。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(TARGETS targets... [<span class="hljs-keyword">EXPORT</span> &lt;<span class="hljs-keyword">export</span>-name&gt;]<br>        RUNTIME DESTINATION &lt;dir&gt;<br>        LIBRARY DESTINATION &lt;dir&gt;<br>        ARCHIVE DESTINATION &lt;dir&gt;<br>        PRIVATE_HEADER DESTINATION &lt;dir&gt;<br>        PUBLIC_HEADER DESTINATION &lt;dir&gt;<br>        RESOURCE DESTINATION &lt;dir&gt;<br>        INCLUDES DESTINATION &lt;dir&gt;<br>        COMPONENT &lt;component&gt;<br>        [PERMISSIONS permissions...]<br>        [CONFIGURATIONS [Debug|Release|...]]<br>        [OPTIONAL]<br>        [NAMELINK_COMPONENT &lt;component&gt;]<br>        [NAMELINK_ONLY | NO_NAMELINK])<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>TARGETS targets...</code>：要安装的目标列表。</li>
+<li><code>EXPORT &lt;export-name&gt;</code>：指定导出集名称，用于生成配置文件。</li>
+<li><code>RUNTIME DESTINATION &lt;dir&gt;</code>：指定运行时文件（如可执行文件）的安装目录。</li>
+<li><code>LIBRARY DESTINATION &lt;dir&gt;</code>：指定共享库文件的安装目录。</li>
+<li><code>ARCHIVE DESTINATION &lt;dir&gt;</code>：指定静态库文件的安装目录。</li>
+<li><code>PRIVATE_HEADER DESTINATION &lt;dir&gt;</code>：指定私有头文件的安装目录。</li>
+<li><code>PUBLIC_HEADER DESTINATION &lt;dir&gt;</code>：指定公有头文件的安装目录。</li>
+<li><code>RESOURCE DESTINATION &lt;dir&gt;</code>：指定资源文件的安装目录。</li>
+<li><code>INCLUDES DESTINATION &lt;dir&gt;</code>：指定包含文件的安装目录。</li>
+<li><code>COMPONENT &lt;component&gt;</code>：指定组件名称，用于组件化的安装。</li>
+<li><code>PERMISSIONS permissions...</code>：指定安装文件的权限。</li>
+<li><code>CONFIGURATIONS [Debug|Release|...]</code>：指定适用的构建配置。</li>
+<li><code>OPTIONAL</code>：如果目标不存在，不会导致安装失败。</li>
+<li><code>NAMELINK_COMPONENT &lt;component&gt;</code>：指定符号链接的组件。</li>
+<li><code>NAMELINK_ONLY | NO_NAMELINK</code>：控制符号链接的安装行为。</li>
+</ul>
+<p>示例：将一个静态库和可执行程序安装到指定的目录。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(MyLibrary STATIC src/library.cpp)<br><span class="hljs-keyword">add_executable</span>(MyExecutable main.cpp)<br><br><span class="hljs-keyword">install</span>(TARGETS MyLibrary MyExecutable<br>    <span class="hljs-keyword">EXPORT</span> MyProjectConfig<br>    RUNTIME DESTINATION bin<br>    LIBRARY DESTINATION lib<br>    ARCHIVE DESTINATION lib<br>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>安装目录（DIRECTORY）</strong></p>
+<p><code>install(DIRECTORY ...)</code> 用于指定将整个目录及其内容安装到指定位置</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(DIRECTORY dirs... DESTINATION &lt;dir&gt;<br>        [FILE_PERMISSIONS permissions...]<br>        [DIRECTORY_PERMISSIONS permissions...]<br>        [USE_SOURCE_PERMISSIONS]<br>        [OPTIONAL]<br>        [MESSAGE_NEVER]<br>        [REGEX &lt;regex&gt; EXCLUDE]<br>        [REGEX &lt;regex&gt; <span class="hljs-keyword">INCLUDE</span>]<br>        [COMPONENT &lt;component&gt;]<br>        [FILES_MATCHING] [PATTERN &lt;pattern&gt; ...])<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>DIRECTORY dirs...</code>：要安装的目录列表。</li>
+<li><code>DESTINATION &lt;dir&gt;</code>：指定安装目录。</li>
+<li><code>FILE_PERMISSIONS permissions...</code>：指定文件的权限。</li>
+<li><code>DIRECTORY_PERMISSIONS permissions...</code>：指定目录的权限。</li>
+<li><code>USE_SOURCE_PERMISSIONS</code>：使用源目录中的权限设置。</li>
+<li><code>OPTIONAL</code>：如果目录不存在，不会导致安装失败。</li>
+<li><code>MESSAGE_NEVER</code>：禁止显示安装消息。</li>
+<li><code>REGEX &lt;regex&gt; EXCLUDE</code>：排除匹配正则表达式的文件或目录。</li>
+<li><code>REGEX &lt;regex&gt; INCLUDE</code>：仅包括匹配正则表达式的文件或目录。</li>
+<li><code>COMPONENT &lt;component&gt;</code>：指定组件名称。</li>
+<li><code>FILES_MATCHING</code>：仅匹配文件。</li>
+<li><code>PATTERN &lt;pattern&gt; ...</code>：指定文件模式。</li>
+</ul>
+<p>示例：安装 <code>include</code> 目录，并排除 <code>fmt/bundled</code> 目录，再根据特定变量添加 <code>fmt/bundled</code>。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(DIRECTORY <span class="hljs-keyword">include</span>/ <br>        DESTINATION <span class="hljs-string">&quot;$&#123;CMAKE_INSTALL_INCLUDEDIR&#125;&quot;</span> <br>        PATTERN <span class="hljs-string">&quot;fmt/bundled&quot;</span> EXCLUDE)<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">NOT</span> SPDLOG_USE_STD_FORMAT <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> SPDLOG_FMT_EXTERNAL <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> SPDLOG_FMT_EXTERNAL_HO)<br>    <span class="hljs-keyword">install</span>(DIRECTORY <span class="hljs-keyword">include</span>/<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>/fmt/bundled/<br>            DESTINATION <span class="hljs-string">&quot;$&#123;CMAKE_INSTALL_INCLUDEDIR&#125;/$&#123;PROJECT_NAME&#125;/fmt/bundled/&quot;</span>)<br><span class="hljs-keyword">endif</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>安装文件（FILES）</strong></p>
+<p><code>install(FILES ...)</code> 用于指定将特定文件安装到指定位置。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(FILES files... DESTINATION &lt;dir&gt;<br>        [FILE_PERMISSIONS permissions...]<br>        [DIRECTORY_PERMISSIONS permissions...]<br>        [USE_SOURCE_PERMISSIONS]<br>        [OPTIONAL]<br>        [MESSAGE_NEVER]<br>        [COMPONENT &lt;component&gt;])<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>FILES files...</code>：要安装的文件列表。</li>
+<li><code>DESTINATION &lt;dir&gt;</code>：指定安装目录。</li>
+<li><code>FILE_PERMISSIONS permissions...</code>：指定文件的权限。</li>
+<li><code>DIRECTORY_PERMISSIONS permissions...</code>：指定目录的权限。</li>
+<li><code>USE_SOURCE_PERMISSIONS</code>：使用源文件中的权限设置。</li>
+<li><code>OPTIONAL</code>：如果文件不存在，不会导致安装失败。</li>
+<li><code>MESSAGE_NEVER</code>：禁止显示安装消息。</li>
+<li><code>COMPONENT &lt;component&gt;</code>：指定组件名称。</li>
+</ul>
+<p>示例：安装 pkg_config 文件到指定目录。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(pkg_config <span class="hljs-string">&quot;$&#123;CMAKE_BINARY_DIR&#125;/$&#123;PROJECT_NAME&#125;.pc&quot;</span>)<br><span class="hljs-keyword">set</span>(pkgconfig_install_dir <span class="hljs-string">&quot;$&#123;CMAKE_INSTALL_LIBDIR&#125;/pkgconfig&quot;</span>)<br><span class="hljs-keyword">configure_file</span>(<span class="hljs-string">&quot;cmake/$&#123;PROJECT_NAME&#125;.pc.in&quot;</span> <span class="hljs-string">&quot;$&#123;pkg_config&#125;&quot;</span> @ONLY)<br><span class="hljs-keyword">install</span>(FILES <span class="hljs-string">&quot;$&#123;pkg_config&#125;&quot;</span> DESTINATION <span class="hljs-string">&quot;$&#123;pkgconfig_install_dir&#125;&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>安装导出集（EXPORT）</strong></p>
+<p><code>install(EXPORT ...)</code> 用于生成并安装目标导出集，通常用于生成配置文件以便其他项目使用该库。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(<span class="hljs-keyword">EXPORT</span> &lt;<span class="hljs-keyword">export</span>-name&gt; DESTINATION &lt;dir&gt;<br>        [NAMESPACE &lt;namespace&gt;]<br>        [<span class="hljs-keyword">FILE</span> &lt;name&gt;.cmake]<br>        [EXPORT_LINK_INTERFACE_LIBRARIES]<br>        [COMPONENT &lt;component&gt;])<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>EXPORT &lt;export-name&gt;</code>：导出集名称。</li>
+<li><code>DESTINATION &lt;dir&gt;</code>：指定安装目录。</li>
+<li><code>NAMESPACE &lt;namespace&gt;</code>：指定命名空间前缀。</li>
+<li><code>FILE &lt;name&gt;.cmake</code>：指定生成的配置文件名。</li>
+<li><code>EXPORT_LINK_INTERFACE_LIBRARIES</code>：导出链接接口库。</li>
+<li><code>COMPONENT &lt;component&gt;</code>：指定组件名称。</li>
+</ul>
+<p>安装目标导出集：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(config_targets_file <span class="hljs-string">&quot;spdlogConfigTargets.cmake&quot;</span>)<br><span class="hljs-keyword">set</span>(export_dest_dir <span class="hljs-string">&quot;$&#123;CMAKE_INSTALL_LIBDIR&#125;/cmake/spdlog&quot;</span>)<br><span class="hljs-keyword">install</span>(<span class="hljs-keyword">EXPORT</span> spdlog DESTINATION <span class="hljs-variable">$&#123;export_dest_dir&#125;</span> NAMESPACE spdlog:: <span class="hljs-keyword">FILE</span> <span class="hljs-variable">$&#123;config_targets_file&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="cmake-生成器表达式"><a href="#cmake-生成器表达式" class="headerlink" title="cmake 生成器表达式"></a>cmake 生成器表达式</h2><p>CMake 生成器表达式是一种用于在生成构建系统文件时进行条件判断和值替换的机制。它们允许你在配置阶段动态地指定编译选项、链接库、包含路径等，从而增强构建系统的灵活性和适应性。生成器表达式通常以 <code>$&lt;...&gt;</code> 的形式出现，并且可以在 <code>target_compile_definitions</code>、<code>target_include_directories</code>、<code>target_link_libraries</code> 等命令中使用。生成器表达式的值会在构建系统生成时被解析，而不是在 CMake 配置阶段。</p>
+<h3 id="条件表达式"><a href="#条件表达式" class="headerlink" title="条件表达式"></a>条件表达式</h3><p>将字符串转换为 0 或 1。以下情况计算结果为 0：当字符串为空，不区分大小写等于 0、FALSE、OFF、N、NO、IGNORE 或 NOTFOUND，或字符串以后缀 -NOTFOUND（区分大小写）结尾。其他情况等于 1。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;BOOL:<span class="hljs-keyword">string</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如果条件为 1，则计算结果为 <code>true_string</code>，如果条件计算结果为 0，则计算结果为空字符串。条件的任何其他值都会导致错误。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;condition:true_string&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如果条件为 1，则计算结果为 <code>true_string</code>，如果条件计算结果为 0，则计算结果为 <code>false_string</code>。条件的任何其他值都会导致错误。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;<span class="hljs-keyword">IF</span>:condition,true_string,false_string&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="逻辑表达式"><a href="#逻辑表达式" class="headerlink" title="逻辑表达式"></a>逻辑表达式</h3><p>这里的 <code>conditions</code> 是一系列条件，AND、OR 和 NOT 就是简单的逻辑谓词</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;<span class="hljs-keyword">AND</span>:conditions&gt;<br>$&lt;<span class="hljs-keyword">OR</span>:conditions&gt;<br>$&lt;<span class="hljs-keyword">NOT</span>:condition&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="字符串表达式"><a href="#字符串表达式" class="headerlink" title="字符串表达式"></a>字符串表达式</h3><p>字符串或者数值相等时结果为 1，否则结果为 0。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;<span class="hljs-keyword">STREQUAL</span>:string1,string2&gt;<br>$&lt;<span class="hljs-keyword">EQUAL</span>:value1,value2&gt;<br></code></pre></td></tr></table></figure>
+<h3 id="配置表达式"><a href="#配置表达式" class="headerlink" title="配置表达式"></a>配置表达式</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;CONFIG&gt;<br></code></pre></td></tr></table></figure>
+
+<p>根据当前构建配置（如 Debug、Release 等）返回不同的值。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_definitions</span>(main PUBLIC $&lt;$&lt;CONFIG:Debug&gt;:DEBUG_MODE&gt;)<br><span class="hljs-keyword">target_compile_definitions</span>(main PUBLIC $&lt;$&lt;CONFIG:Release&gt;:RELEASE_MODE&gt;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="工具链和语言表达式"><a href="#工具链和语言表达式" class="headerlink" title="工具链和语言表达式"></a>工具链和语言表达式</h3><p>平台 ID（操作系统 ID），其中，platform_ids 为 CMAKE_SYSTEM_NAME 变量的值。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;PLATFORM_ID:platform_ids&gt;<br></code></pre></td></tr></table></figure>
+
+<p>根据平台 ID 返回不同的值。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_definitions</span>(main PRIVATE $&lt;$&lt;PLATFORM_ID:Windows&gt;:WINDOWS_PLATFORM&gt;)<br><span class="hljs-keyword">target_compile_definitions</span>(main PRIVATE $&lt;$&lt;PLATFORM_ID:Linux&gt;:LINUX_PLATFORM&gt;)<br></code></pre></td></tr></table></figure>
+
+<p>C++ 编译器 ID，其值为 <code>CMAKE_&lt;LANG&gt;_COMPILER_ID</code> 变量的值。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$&lt;CXX_COMPILER_ID&gt;<br>$&lt;COMPILE_LANGUAGE:languages&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如果 C++ 编译器是 MSVC 且编译的语言不是 CUDA，那么就开启 <code>/wd4251</code> 和 <code>/wd4275</code> 编译选项。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_options</span>(main PUBLIC $&lt;$&lt;<span class="hljs-keyword">AND</span>:$&lt;CXX_COMPILER_ID:MSVC&gt;<br>    $&lt;<span class="hljs-keyword">NOT</span>:$&lt;COMPILE_LANGUAGE:CUDA&gt;&gt;&gt;:/wd4251 /wd4275&gt;)<br></code></pre></td></tr></table></figure>
+
+<h2 id="cmake-模块"><a href="#cmake-模块" class="headerlink" title="cmake 模块"></a>cmake 模块</h2><h3 id="GNUInstallDirs-模块"><a href="#GNUInstallDirs-模块" class="headerlink" title="GNUInstallDirs 模块"></a>GNUInstallDirs 模块</h3><p>定义 GNU 标准安装目录，提供由 GNU 编码标准定义的安装目录变量。</p>
+<p>常用变量：</p>
+<ul>
+<li>CMAKE_INSTALL_&lt;dir&gt;</li>
+<li>CMAKE_INSTALL_FULL_&lt;dir&gt;</li>
+</ul>
+<p>其中，<code>&lt;dir&gt;</code> 是以下的其中之一：</p>
+<ul>
+<li>BINDIR: 用户可执行文件 (bin)</li>
+<li>SBINDIR: 系统管理员可执行文件 (sbin)</li>
+<li>LIBEXECDIR: 程序可执行文件 (libexec)</li>
+<li>SYSCONFDIR: 只读单机数据 (etc)</li>
+<li>SHAREDSTATEDIR: 可修改的独立于架构的数据 (com)</li>
+<li>LOCALSTATEDIR: 可修改的单机数据 (var)</li>
+<li>RUNSTATEDIR: 运行时变量数据 (LOCALSTATEDIR&#x2F;run)</li>
+<li>LIBDIR: 目标代码库 (lib 或 lib64)</li>
+<li>INCLUDEDIR: C 头文件 (include)</li>
+<li>OLDINCLUDEDIR: 非 gcc 的 C 头文件 (&#x2F;usr&#x2F;include)</li>
+<li>DATAROOTDIR: 只读独立于架构的数据根目录 (share)</li>
+<li>DATADIR: 只读独立于架构的数据 (DATAROOTDIR)</li>
+<li>INFODIR: 信息文档 (DATAROOTDIR&#x2F;info)</li>
+<li>LOCALEDIR: 语言环境相关数据 (DATAROOTDIR&#x2F;locale)</li>
+<li>MANDIR: man 文档 (DATAROOTDIR&#x2F;man)</li>
+<li>DOCDIR: 文档根目录 (DATAROOTDIR&#x2F;doc&#x2F;PROJECT_NAME)</li>
+</ul>
+<h2 id="cmake-命令行"><a href="#cmake-命令行" class="headerlink" title="cmake 命令行"></a>cmake 命令行</h2><h3 id="–system-information"><a href="#–system-information" class="headerlink" title="–system-information"></a>–system-information</h3><p>–system-information，它可以生成一个包含系统信息和 CMake 默认配置的文本文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake --system-information system_info.txt<br></code></pre></td></tr></table></figure>
+
+<h3 id="S"><a href="#S" class="headerlink" title="-S"></a>-S</h3><p>要构建的 CMake 项目的根目录路径</p>
+<h3 id="B"><a href="#B" class="headerlink" title="-B"></a>-B</h3><p>设置构建目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake [&lt;options&gt;] -B &lt;path-to-build&gt; [-S &lt;path-to-source&gt;]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake -S . -B build<br></code></pre></td></tr></table></figure>
+
+<h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><p>设置生成器，指定使用的生成器（如 Makefile, Ninja, Visual Studio 等）。不同的生成器会生成不同类型的构建系统文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake -G <span class="hljs-string">&quot;Unix Makefiles&quot;</span> ..<br>cmake -G Ninja ..<br>cmake -G <span class="hljs-string">&quot;Visual Studio 16 2019&quot;</span> ..<br></code></pre></td></tr></table></figure>
+
+<h3 id="D"><a href="#D" class="headerlink" title="-D"></a>-D</h3><p>设置缓存变量的值。这可以用于设置编译选项、启用&#x2F;禁用特性等。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake -D CMAKE_BUILD_TYPE=Release -S . -B build<br>cmake -D ENABLE_TESTS=ON ..<br></code></pre></td></tr></table></figure>
+
+<h3 id="E"><a href="#E" class="headerlink" title="-E"></a>-E</h3><p>CMake 通过签名提供内置命令行工具</p>
+<p><strong>remove_directory &lt;dir&gt;</strong>: 删除 &lt;dir&gt; 目录及其内容。如果目录不存在，则会被默默忽略。请改用 <code>rm</code>（已弃用）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake -E remove_directory build<br></code></pre></td></tr></table></figure>
+
+<p><strong>rm [-rRf] [–] &lt;file|dir&gt;</strong>: 删除文件 &lt;file&gt; 或目录 &lt;dir&gt;。使用 <code>-r</code> 或 <code>-R</code> 递归删除目录及其内容。如果任何列出的文件&#x2F;目录不存在，该命令将返回非零退出代码，但不记录任何消息。<code>-f</code> 选项强制删除，不提示确认，如果文件不存在也不报错。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake -E <span class="hljs-built_in">rm</span> -r -f build<br></code></pre></td></tr></table></figure>
+
+<h3 id="t-–target"><a href="#t-–target" class="headerlink" title="-t &#x2F; –target"></a>-t &#x2F; –target</h3><p>构建 <code>&lt;target&gt;</code> 而不是默认目标。可以指定多个目标，以空格分隔。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(mainlib <span class="hljs-variable">$&#123;SRC_LIST&#125;</span>)<br><span class="hljs-keyword">target_include_directories</span>(mainlib PUBLIC <span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="hljs-keyword">include</span>)<br><br><span class="hljs-keyword">add_library</span>(testlib EXCLUDE_FROM_ALL <span class="hljs-variable">$&#123;TEST_SRC_LIST&#125;</span>)<br><span class="hljs-keyword">target_include_directories</span>(testlib PRIVATE <span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="hljs-keyword">test</span>/<span class="hljs-keyword">include</span>)<br><br><span class="hljs-keyword">target_link_libraries</span>(testlib PRIVATE mainlib)<br><br><span class="hljs-keyword">add_executable</span>(runtests <span class="hljs-keyword">test</span>/run_tests.cpp)<br><span class="hljs-keyword">target_link_libraries</span>(runtests PRIVATE testlib)<br></code></pre></td></tr></table></figure>
+
+<p><code>testlib</code> 被标记为 <code>EXCLUDE_FROM_ALL</code>，默认不会构建这个库，但可以通过显式地指定目标来构建测试库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake -S . -B build --target runtests<br></code></pre></td></tr></table></figure>
+
+<h3 id="–build"><a href="#–build" class="headerlink" title="–build"></a>–build</h3><p>构建项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake --build build<br></code></pre></td></tr></table></figure>
+
+<h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><p>指定构建项目的线程数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake --build build -j4<br></code></pre></td></tr></table></figure>
+
+<h2 id="cmake-小技巧"><a href="#cmake-小技巧" class="headerlink" title="cmake 小技巧"></a>cmake 小技巧</h2><blockquote>
+<p>判断项目是主项目还是作为一个子模块被其他项目引用</p>
+</blockquote>
+<p>我们判断一下 cmake 当前目录和项目的源码目录是否相等，如果相等，则该项目是主项目，否则为子模块。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">NOT</span> <span class="hljs-keyword">DEFINED</span> XXX_MASTER_PROJECT)<br>    <span class="hljs-keyword">if</span>(CMAKE_CURRENT_SOURCE_DIR <span class="hljs-keyword">STREQUAL</span> CMAKE_SOURCE_DIR)<br>        <span class="hljs-keyword">set</span>(XXX_MASTER_PROJECT <span class="hljs-keyword">ON</span>)<br>    <span class="hljs-keyword">else</span>()<br>        <span class="hljs-keyword">set</span>(XXX_MASTER_PROJECT <span class="hljs-keyword">OFF</span>)<br>    <span class="hljs-keyword">endif</span>()<br><span class="hljs-keyword">endif</span>()<br></code></pre></td></tr></table></figure>
+
+<p>当然，在 CMake &gt;&#x3D; 3.21 中，我们应该使用 <code>PROJECT_IS_TOP_LEVEL</code> 来代替自定义逻辑。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cmake/" class="category-chain-item">cmake</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/cmake/" class="print-no-link">#cmake</a>
+      
+        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>cmake 基础</div>
+      <div>https://nnstrings.github.io/2025/06/28/cmake/cmake基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Strings Ninety-nine</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/29/cpp/%E5%8F%98%E5%8F%82%E5%87%BD%E6%95%B0/" title="变参函数">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">变参函数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/28/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
