@@ -19,15 +19,15 @@
   <meta name="author" content="Strings Ninety-nine">
   <meta name="keywords" content="">
   
-    <meta name="description" content="C 风格变参函数 ⚠️ ️尽量不要C风格变参函数，现代C++提供了更安全、更强大的替代方案（变参模板等），但在特定场景下仍有存在价值。">
+    <meta name="description" content="变参函数就是传入函数的参数数量是不确定的函数，在程序中有广泛的应用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="变参函数">
 <meta property="og:url" content="https://nnstrings.github.io/2025/06/29/cpp/%E5%8F%98%E5%8F%82%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="C 风格变参函数 ⚠️ ️尽量不要C风格变参函数，现代C++提供了更安全、更强大的替代方案（变参模板等），但在特定场景下仍有存在价值。">
+<meta property="og:description" content="变参函数就是传入函数的参数数量是不确定的函数，在程序中有广泛的应用。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-29T03:52:08.000Z">
-<meta property="article:modified_time" content="2025-09-26T17:52:21.498Z">
+<meta property="article:modified_time" content="2025-10-16T15:33:04.091Z">
 <meta property="article:author" content="Strings Ninety-nine">
 <meta property="article:tag" content="cpp">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          569 字
+          601 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -276,12 +276,10 @@
             
               <div class="markdown-body">
                 
-                <h2 id="C-风格变参函数"><a href="#C-风格变参函数" class="headerlink" title="C 风格变参函数"></a>C 风格变参函数</h2><blockquote>
-<p>⚠️ ️尽量不要C风格变参函数，现代C++提供了更安全、更强大的替代方案（变参模板等），但在特定场景下仍有存在价值。</p>
-</blockquote>
+                <p>变参函数就是传入函数的参数数量是不确定的函数，在程序中有广泛的应用。</p>
 <span id="more"></span>
 
-<p>在无法给出所有传递给函数的参数的类型和数目时，可以使用省略号（…）指定函数参数表。</p>
+<h2 id="C-风格变参函数"><a href="#C-风格变参函数" class="headerlink" title="C 风格变参函数"></a>C 风格变参函数</h2><p>在无法给出所有传递给函数的参数的类型和数目时，可以使用省略号（…）指定函数参数表。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun1</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">double</span> b, ...)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun2</span><span class="hljs-params">(<span class="hljs-type">int</span> a ...)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <p>最具代表性的变长参数函数：<code>printf</code> 函数。</p>
@@ -300,6 +298,9 @@
 <p>实际上，原理很简单，<code>va_list</code> 是一个字符指针，<code>va_start</code> 确定初始参数的下一个参数，<code>va_arg</code> 确定当前参数的下一个参数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> <span class="hljs-type">char</span> *va_list;<br><br><span class="hljs-comment">// 向上取整</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __va_rounded_size(TYPE)  \</span><br><span class="hljs-meta">  (((sizeof (TYPE) + sizeof (int) - 1) / sizeof (int)) * sizeof (int))</span><br><br><span class="hljs-comment">// 确定初始参数下一个参数的位置</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> va_start(AP, LASTARG) 						\</span><br><span class="hljs-meta"> (AP = ((char *) &amp;(LASTARG) + __va_rounded_size (LASTARG)))</span><br><br><span class="hljs-comment">// 确定这个参数的下一个参数的位置</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> va_arg(AP, TYPE)						\</span><br><span class="hljs-meta"> (AP += __va_rounded_size (TYPE),					\</span><br><span class="hljs-meta">  *((TYPE *) (AP - __va_rounded_size (TYPE))))</span><br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>⚠️ ️尽量不要C风格变参函数，现代C++提供了更安全、更强大的替代方案（变参模板等），但在特定场景下仍有存在价值。</p>
+</blockquote>
 <h2 id="变参模板函数"><a href="#变参模板函数" class="headerlink" title="变参模板函数"></a>变参模板函数</h2>
                 
               </div>
