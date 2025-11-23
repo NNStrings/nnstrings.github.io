@@ -19,21 +19,21 @@
   <meta name="author" content="Strings Ninety-nine">
   <meta name="keywords" content="">
   
-    <meta name="description" content="翻译单元（Translation Unit）： C++编译过程的基本单位。它通常指一个经过预处理的源文件（即一个.cpp文件及其所有通过#include指令包含的头文件），其中不再包含任何预处理器指令。编译器独立地将每个翻译单元编译成目标文件。 潜在作用域（Potential Scope）： 一个名字（如变量名、函数名）在源代码中理论上可以被使用的区域。 内部链接（Internal Linkage">
+    <meta name="description" content="c_cpp_properties.json基本结构（可以复制这个然后再适配项目）： 123456789101112131415161718192021222324&#123;    &quot;configurations&quot;: [        &#123;            &quot;name&quot;: &quot;Linux&quot;,            &amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++术语">
-<meta property="og:url" content="https://nnstrings.github.io/2025/09/22/cpp/C++%E6%9C%AF%E8%AF%AD/index.html">
+<meta property="og:title" content="VSCode C++ Json配置">
+<meta property="og:url" content="https://nnstrings.github.io/2025/11/09/tools/C++Json%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="翻译单元（Translation Unit）： C++编译过程的基本单位。它通常指一个经过预处理的源文件（即一个.cpp文件及其所有通过#include指令包含的头文件），其中不再包含任何预处理器指令。编译器独立地将每个翻译单元编译成目标文件。 潜在作用域（Potential Scope）： 一个名字（如变量名、函数名）在源代码中理论上可以被使用的区域。 内部链接（Internal Linkage">
+<meta property="og:description" content="c_cpp_properties.json基本结构（可以复制这个然后再适配项目）： 123456789101112131415161718192021222324&#123;    &quot;configurations&quot;: [        &#123;            &quot;name&quot;: &quot;Linux&quot;,            &amp;quo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-09-22T14:58:50.000Z">
-<meta property="article:modified_time" content="2025-10-15T16:27:23.290Z">
+<meta property="article:published_time" content="2025-11-09T11:45:08.000Z">
+<meta property="article:modified_time" content="2025-11-15T15:04:22.558Z">
 <meta property="article:author" content="Strings Ninety-nine">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>C++术语 - Hexo</title>
+  <title>VSCode C++ Json配置 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="C++术语"></span>
+            <span id="subtitle" data-typed-text="VSCode C++ Json配置"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-09-22 22:58" pubdate>
-          2025年9月22日 晚上
+        <time datetime="2025-11-09 19:45" pubdate>
+          2025年11月9日 晚上
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          202 字
+          888 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          2 分钟
+          8 分钟
         
       </span>
     
@@ -270,15 +270,68 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">C++术语</h1>
+            <h1 id="seo-header">VSCode C++ Json配置</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>翻译单元（Translation Unit）：</strong> C++编译过程的基本单位。它通常指一个经过预处理的源文件（即一个.cpp文件及其所有通过#include指令包含的头文件），其中不再包含任何预处理器指令。编译器独立地将每个翻译单元编译成目标文件。</p>
-<p><strong>潜在作用域（Potential Scope）：</strong> 一个名字（如变量名、函数名）在源代码中理论上可以被使用的区域。</p>
-<p><strong>内部链接（Internal Linkage）：</strong> 一种链接属性，指一个名字（如变量、函数、常量）的作用域被限制在它所在的翻译单元内部。具有内部链接的符号在不同的翻译单元中可以有相同的名字而不会引发链接错误，因为它们彼此独立。</p>
+                <span id="more"></span>
 
+<h2 id="c-cpp-properties-json"><a href="#c-cpp-properties-json" class="headerlink" title="c_cpp_properties.json"></a>c_cpp_properties.json</h2><p>基本结构（可以复制这个然后再适配项目）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Linux&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;includePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;defines&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;compilerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/g++&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cStandard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c17&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cppStandard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c++20&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;intelliSenseMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;linux-gcc-x64&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;browse&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                    <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-string">&quot;/usr/include&quot;</span><br>                <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;limitSymbolsToIncludedHeaders&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;configurationProvider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ms-vscode.makefile-tools&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>configurations:</strong> 一个数组，里面可以存多套配置</p>
+<p><strong>name:</strong> 配置名称，你可以在命令面板中切换当前IntelliSense配置，常见取值为 <code>Win32</code>，<code>Linux</code> 等</p>
+<p><strong>includePath:</strong> 包含的路径，告诉IntelliSense去哪里找头文件，通常在引入第三方库后添加对应的路径</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;includePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;/usr/include&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;/usr/local/include&quot;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>defines:</strong> 模拟增加宏定义</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;defines&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;DEBUG&quot;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>compilerPath:</strong> 指定的模拟的编译器路径（这个很重要，会影响代码补全、语法检查等IntelliSense核心功能）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;compilerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/opt/gcc-14.2/bin/g++&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>cStandard和cppStandard:</strong> 指定IntelliSense使用的C&#x2F;C++语言标准，C的可选值为<code>c89</code>，<code>c90</code>，<code>c99</code>，<code>c11</code>，<code>c17</code>，<code>gnu11</code>，C++的可选值为<code>c++98</code>，<code>c++11</code>，<code>c++14</code>，<code>c++17</code>，<code>c++20</code>，<code>c++23</code>，<code>gnu++17</code>。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;cStandard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c17&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;cppStandard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c++23&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>intelliSenseMode:</strong> 指定VSCode模拟的系统+编译器架构，用于决定宏定义与默认头路径，例如在x64 Linux上通常为 <code>linux-gcc-x64</code> 和 <code>linux-clang-x64</code>。</p>
+<p><strong>browse:</strong> 为项目构建符号数据库，保存了项目中类、函数、变量、宏等符号的位置与关系，供编辑器做全局导航功能。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;browse&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;/usr/include&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;/usr/local/include&quot;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;limitSymbolsToIncludedHeaders&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;databaseFilename&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/.vscode/browse.vc.db&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中，<code>path</code> 定义需要扫描的路径，主要包括项目源代码、头文件、第三方库和系统库。</p>
+<blockquote>
+<p>⚠️ 不要引入过多的外部路径，会影响数据库的效率</p>
+</blockquote>
+<p><code>limitSymbolsToIncludedHeaders</code> 控制是否只索引被实际包含的头文件，为<strong>布尔值</strong>。</p>
+<p><code>databaseFilename</code> 为符号数据库的存储路径，默认在 <code>.vscode/browse.vc.db</code>。</p>
+<p>在大型项目中，vscode索引速度慢，可以通过配置browse来减轻压力，在默认情况下，vscode会扫描所有的目录，例如.git，build，外部库，中间文件等。我们可以在 <code>browse.path</code> 中只存放真正的源码路径，不放构建路径。</p>
+<p><strong>compilerArgs:</strong> 模拟编译器命令行选项</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;compilerArgs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;-Wall&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;-Wextra&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;-O2&quot;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>configurationProvider:</strong> 如果你使用CMake、Makefile、Meson等扩展，这项可让vscode自动从构建系统读取配置。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;configurationProvider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ms-vscode.makefile-tools&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>version:</strong> 文件格式版本。目前最新版本一般是4，不建议更改。</p>
+<h2 id="settings-json"><a href="#settings-json" class="headerlink" title="settings.json"></a>settings.json</h2><p>这个json可以修改大多数编辑器外观相关的设置，虽然这个主题只讨论C++相关，但还是包括很多相关设置：</p>
+<ul>
+<li>基础编辑器行为</li>
+<li>C++专属配置块</li>
+<li>IntelliSense&#x2F;编译配置</li>
+<li>代码分析&#x2F;诊断</li>
+<li>格式化（clang-format）</li>
+<li>智能提示&#x2F;补全</li>
+<li>调试&#x2F;运行体验</li>
+<li>代码风格偏好（可选）</li>
+<li>IntelliSense额外配置</li>
+</ul>
+<p>暂时还没用到这里的大部分功能，这里讲一个根据cmake自动IntelliSense的方法，首先，在 <code>settings.json</code> 中配置如下信息：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;cmake.configureOnOpen&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;C_Cpp.default.configurationProvider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ms-vscode.cmake-tools&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，<code>Ctrl+Shift+P</code> 使用 <code>CMake configuration</code> 即可完成IntelliSense配置。</p>
+<blockquote>
+<p>⚠️ 如果需要更细致的配置，还是建议手动维护 <code>c_cpp_properties.json</code> 文件。</p>
+</blockquote>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
                 
               </div>
             
@@ -295,8 +348,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>C++术语</div>
-      <div>https://nnstrings.github.io/2025/09/22/cpp/C++术语/</div>
+      <div>VSCode C++ Json配置</div>
+      <div>https://nnstrings.github.io/2025/11/09/tools/C++Json配置/</div>
     </div>
     <div class="license-meta">
       
@@ -308,7 +361,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年9月22日</div>
+          <div>2025年11月9日</div>
         </div>
       
       
@@ -340,18 +393,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/10/28/cpp/attribute/" title="attribute">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">attribute</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/09/22/cpp/%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" title="命名空间">
-                        <span class="hidden-mobile">命名空间</span>
+                      <a href="/2025/11/04/asm/AT-T%E6%B1%87%E7%BC%96/" title="AT&amp;T汇编">
+                        <span class="hidden-mobile">AT&amp;T汇编</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

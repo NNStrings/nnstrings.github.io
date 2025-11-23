@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Strings Ninety-nine">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="GNU C的一大特色就是 __attribute__ 机制，__attribute__ 可以设置函数属性（Function  Attribute），变量属性（Variable Attribute）和类型属性（Type Attribute）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="attribute">
+<meta property="og:url" content="https://nnstrings.github.io/2025/10/28/cpp/attribute/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="GNU C的一大特色就是 __attribute__ 机制，__attribute__ 可以设置函数属性（Function  Attribute），变量属性（Variable Attribute）和类型属性（Type Attribute）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-28T15:44:09.000Z">
+<meta property="article:modified_time" content="2025-11-02T16:39:18.605Z">
+<meta property="article:author" content="Strings Ninety-nine">
+<meta property="article:tag" content="cpp">
+<meta property="article:tag" content="gnu">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>attribute - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nnstrings.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="attribute"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-28 23:44" pubdate>
+          2025年10月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          966 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">attribute</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>GNU C的一大特色就是 <code>__attribute__</code> 机制，<code>__attribute__</code> 可以设置函数属性（Function  Attribute），变量属性（Variable Attribute）和类型属性（Type Attribute）。</p>
+<span id="more"></span>
+
+<p>这篇笔记讲述的东西可能比较古神低语，我们其实有更现代的做法。其后，会介绍更具扩展性的C++属性和hedley库。不过，了解__attribute__机制是很有必要的。</p>
+<blockquote>
+<p>💡 属性名称既可以带两边的下划线，也可以不带，没有影响。例如，<code>__attribute__((__const__))</code> 和 <code>__attribute__((const))</code> 是等价的。</p>
+</blockquote>
+<h2 id="attribute-alias-symbol"><a href="#attribute-alias-symbol" class="headerlink" title="__attribute__((__alias__(symbol)))"></a>__attribute__((__alias__(symbol)))</h2><p>函数属性和变量属性。用于为一个已定义的函数或变量创建一个<strong>别名</strong>。</p>
+<blockquote>
+<p>💡 此事在 C++ 引用中亦有记载</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> a + <span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> alias_a __attribute__((alias(<span class="hljs-string">&quot;a&quot;</span>)));<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">alias_func</span><span class="hljs-params">()</span> __<span class="hljs-title function_">attribute__</span><span class="hljs-params">((alias(<span class="hljs-string">&quot;func&quot;</span>)))</span>;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a is: %d, address is %p\n&quot;</span>, a, (<span class="hljs-type">void</span>*)&amp;a);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;alias_a is: %d, address is %p\n&quot;</span>, alias_a, (<span class="hljs-type">void</span>*)&amp;alias_a);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;func() returns: %d, address is %p\n&quot;</span>, func(), (<span class="hljs-type">void</span>*)func);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;alias_func() returns: %d, address is %p\n&quot;</span>, alias_func(), (<span class="hljs-type">void</span>*)alias_func);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">a is: 1, address is 0x404030<br>alias_a is: 1, address is 0x404030<br>func() returns: 2, address is 0x401126<br>alias_func() returns: 2, address is 0x401126<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ 如果在C++中使用，注意加上 extern “C”，因为 C++ 函数的符号名是被修饰过的，例如在g++上，func()函数的符号名会变成_Z4funcv之类的名字。</p>
+</blockquote>
+<blockquote>
+<p>💡 感觉没有任何应用场景…</p>
+</blockquote>
+<h2 id="aligned-x-和-aligned"><a href="#aligned-x-和-aligned" class="headerlink" title="__aligned__(x) 和 __aligned__"></a>__aligned__(x) 和 __aligned__</h2><p>函数属性、变量属性和类型属性，这两个属性用于控制变量、结构体、联合体、类型或函数的<a href="./%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90.md">内存对齐</a>方式。</p>
+<blockquote>
+<p>💡 此事在 C++11 alignas 和 alignof 中亦有记载</p>
+</blockquote>
+<p>变量对齐：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> a;<br>    <span class="hljs-type">int</span> b __attribute__((<span class="hljs-built_in">aligned</span>(<span class="hljs-number">16</span>)));<br>    <span class="hljs-type">char</span> c[<span class="hljs-number">32</span>] __attribute__((<span class="hljs-built_in">aligned</span>(<span class="hljs-number">32</span>)));<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of a: %p\n&quot;</span>, (<span class="hljs-type">void</span>*)&amp;a);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of b: %p\n&quot;</span>, (<span class="hljs-type">void</span>*)&amp;b);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of c: %p\n&quot;</span>, (<span class="hljs-type">void</span>*)&amp;c);<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a % 16 = %d\n&quot;</span>, ((<span class="hljs-type">uintptr_t</span>)&amp;a) % <span class="hljs-number">16</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;b % 16 = %d\n&quot;</span>, ((<span class="hljs-type">uintptr_t</span>)&amp;b) % <span class="hljs-number">16</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;c % 32 = %d\n&quot;</span>, ((<span class="hljs-type">uintptr_t</span>)&amp;c) % <span class="hljs-number">32</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs txt">Address of a: 0x7fffed6a1ebc<br>Address of b: 0x7fffed6a1eb0<br>Address of c: 0x7fffed6a1ec0<br>a % 16 = 12<br>b % 16 = 0<br>c % 32 = 0<br></code></pre></td></tr></table></figure>
+
+<p>结构体对齐：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">normal</span> &#123;</span><br>    <span class="hljs-type">char</span> a;<br>    <span class="hljs-type">int</span> b;<br>    <span class="hljs-type">short</span> c;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">aligned_8</span> &#123;</span><br>    <span class="hljs-type">char</span> a;<br>    <span class="hljs-type">int</span> b;<br>    <span class="hljs-type">short</span> c;<br>&#125; __attribute__((aligned(<span class="hljs-number">8</span>)));  <span class="hljs-comment">//💡 也可以写在struct后面，后面就不赘述了</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">aligned_16</span> &#123;</span><br>    <span class="hljs-type">int</span> x[<span class="hljs-number">3</span>];<br>&#125; __attribute__((aligned(<span class="hljs-number">16</span>)));<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Size of normal struct: %zu\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(normal));<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Size of aligned_8 struct: %zu\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(aligned_8));<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Size of aligned_16 struct: %zu\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(aligned_16));<br><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">aligned_16</span> <span class="hljs-title">arr</span>[2];</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of arr[0]: %p\n&quot;</span>, (<span class="hljs-type">void</span>*)&amp;arr[<span class="hljs-number">0</span>]);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Address of arr[1]: %p\n&quot;</span>, (<span class="hljs-type">void</span>*)&amp;arr[<span class="hljs-number">1</span>]);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Distance: %ld bytes\n&quot;</span>, (<span class="hljs-type">char</span>*)&amp;arr[<span class="hljs-number">1</span>] - (<span class="hljs-type">char</span>*)&amp;arr[<span class="hljs-number">0</span>]);<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arr[0] aligned to 16 bytes: %s\n&quot;</span>, ((<span class="hljs-type">uintptr_t</span>)&amp;arr[<span class="hljs-number">0</span>] % <span class="hljs-number">16</span> == <span class="hljs-number">0</span>) ? <span class="hljs-string">&quot;Yes&quot;</span> : <span class="hljs-string">&quot;No&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arr[1] aligned to 16 bytes: %s\n&quot;</span>, ((<span class="hljs-type">uintptr_t</span>)&amp;arr[<span class="hljs-number">1</span>] % <span class="hljs-number">16</span> == <span class="hljs-number">0</span>) ? <span class="hljs-string">&quot;Yes&quot;</span> : <span class="hljs-string">&quot;No&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输入：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs txt">Size of normal struct: 12<br>Size of aligned_8 struct: 16<br>Size of aligned_16 struct: 16<br>Address of arr[0]: 0x7ffc26f4e560<br>Address of arr[1]: 0x7ffc26f4e570<br>Distance: 16 bytes<br>arr[0] aligned to 16 bytes: Yes<br>arr[1] aligned to 16 bytes: Yes<br></code></pre></td></tr></table></figure>
+
+<p>还可以定义类型别名：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-type">int</span> aligned_int_array[<span class="hljs-number">4</span>] __attribute__((aligned(<span class="hljs-number">16</span>)));<br></code></pre></td></tr></table></figure>
+
+<p>还可以定义函数的首条指令的最小对齐方式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span> __<span class="hljs-title function_">attribute__</span><span class="hljs-params">((aligned(<span class="hljs-number">128</span>)))</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span> &#123;<br>    <span class="hljs-keyword">return</span> val + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>__attribute__((__aligned__))</code> 表示使用最大对齐值，等价于 <code>__attribute__((aligned(__alignof__(type))))</code>，常用于变量声明，让编译器自动选择最佳对齐。</p>
+<h2 id="packed"><a href="#packed" class="headerlink" title="__packed__"></a>__packed__</h2><p>变量属性和类型属性。用于控制结构体、联合体或变量的内存布局，使其按紧凑方式存储，不对其进行内存对齐。</p>
+<p>对于结构体的对齐：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> __<span class="hljs-title">attribute__</span>((<span class="hljs-title">packed</span>)) <span class="hljs-title">packed</span> &#123;</span><br>    <span class="hljs-type">int</span> a;<br>    <span class="hljs-type">char</span> b;<br>&#125;;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Size of packed struct: %zu\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> packed));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs txt">Size of packed struct: 5<br></code></pre></td></tr></table></figure>
+
+<p>对于变量的对齐：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> __<span class="hljs-title">attribute__</span>((<span class="hljs-title">packed</span>)) <span class="hljs-title">packed</span> &#123;</span><br>    <span class="hljs-type">int</span> a;<br>    <span class="hljs-type">char</span> b;<br>&#125; <span class="hljs-type">packed_t</span>;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ 注意，不要滥用对齐，对齐虽然省下了空间，但是降低了访问性能</p>
+</blockquote>
+<blockquote>
+<p>💡 通常在硬件有特殊要求、网络协议数据包、嵌入式系统内存受限等情况下会使用</p>
+</blockquote>
+<h2 id="attribute-always-inline"><a href="#attribute-always-inline" class="headerlink" title="__attribute__((__always_inline__))"></a>__attribute__((__always_inline__))</h2><p>函数属性。用于强制进行函数内联，通常配合 <code>inline</code> 使用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span><br><br><span class="hljs-keyword">inline</span> __attribute__((always_inline)) <span class="hljs-type">void</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span> &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; val; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Value: %d\n&quot;</span>, i);<br>    &#125;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> number = <span class="hljs-number">5</span>;<br>    func(number);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 有编译器优化内联，感觉没有任何应用场景…</p>
+</blockquote>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cpp/" class="category-chain-item">cpp</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
+      
+        <a href="/tags/gnu/" class="print-no-link">#gnu</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>attribute</div>
+      <div>https://nnstrings.github.io/2025/10/28/cpp/attribute/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Strings Ninety-nine</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/30/cpp/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="内存对齐">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">内存对齐</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/22/cpp/C++%E6%9C%AF%E8%AF%AD/" title="C++术语">
+                        <span class="hidden-mobile">C++术语</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
