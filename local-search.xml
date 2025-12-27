@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>cmake告警</title>
+    <link href="/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/"/>
+    <url>/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/</url>
+    
+    <content type="html"><![CDATA[<p>强迫症福利：消除cmake配置过程中的一些告警信息。</p><span id="more"></span><h2 id="抑制告警"><a href="#抑制告警" class="headerlink" title="抑制告警"></a>抑制告警</h2><p>直接使用 <code>-Wno-dev</code> 临时抑制警告生成：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">cmake -Wno-dev ...<br></code></pre></td></tr></table></figure><h2 id="策略告警"><a href="#策略告警" class="headerlink" title="策略告警"></a>策略告警</h2><p>当使用版本较高的cmake编译老项目，会出现一些策略告警，例如，笔者使用cmake3.31.0编译了llvm-project-12.0.0，出现了如下的告警信息（具有普适性）</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">CMake <span class="hljs-built_in">Warning</span> (dev) at /home/nnstrings/llvm-project/clang/CMakeLists.txt:<span class="hljs-number">292</span> (find_package):<br>  <span class="hljs-keyword">Policy</span> CMP0146 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">set</span>: The FindCUDA module <span class="hljs-keyword">is</span> removed.  Run &quot;cmake<br>  --help-policy CMP0146&quot; <span class="hljs-keyword">for</span> <span class="hljs-keyword">policy</span> details.  Use the cmake_policy command <span class="hljs-keyword">to</span><br>  <span class="hljs-keyword">set</span> the <span class="hljs-keyword">policy</span> <span class="hljs-keyword">and</span> suppress this <span class="hljs-built_in">warning</span>.<br><br>This <span class="hljs-built_in">warning</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">for</span> project developers.  Use -Wno-dev <span class="hljs-keyword">to</span> suppress it.<br></code></pre></td></tr></table></figure><p>定位关键信息路径 <code>/home/nnstrings/llvm-project/clang/CMakeLists.txt</code> 和策略名称 <code>CMP0146</code>，只要在指定的 <code>CMakeLists.txt</code> 开头或警告前加入如下代码即可消除告警</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">POLICY</span> CMP0146)<br>  <span class="hljs-keyword">cmake_policy</span>(<span class="hljs-keyword">SET</span> CMP0146 NEW)<br><span class="hljs-keyword">endif</span>()<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>cmake</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>cmake</tag>
+      
+      <tag>cpp</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>VSCode C++ Json配置</title>
     <link href="/2025/11/09/tools/C++Json%E9%85%8D%E7%BD%AE/"/>
     <url>/2025/11/09/tools/C++Json%E9%85%8D%E7%BD%AE/</url>
