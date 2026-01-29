@@ -19,23 +19,22 @@
   <meta name="author" content="Strings Ninety-nine">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强迫症福利：消除cmake配置过程中的一些告警信息。">
+    <meta name="description" content="源码详见 llvm&#x2F;include&#x2F;llvm&#x2F;ADT&#x2F;IntrusiveRefCntPtr.h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cmake告警">
-<meta property="og:url" content="https://nnstrings.github.io/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/index.html">
+<meta property="og:title" content="llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr">
+<meta property="og:url" content="https://nnstrings.github.io/2025/12/27/llvm12/llvm12%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-IntrusiveRefCntPtr/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="强迫症福利：消除cmake配置过程中的一些告警信息。">
+<meta property="og:description" content="源码详见 llvm&#x2F;include&#x2F;llvm&#x2F;ADT&#x2F;IntrusiveRefCntPtr.h">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-11-24T14:42:38.000Z">
-<meta property="article:modified_time" content="2025-11-24T14:51:34.634Z">
+<meta property="article:published_time" content="2025-12-27T15:50:46.000Z">
+<meta property="article:modified_time" content="2026-01-27T16:42:58.068Z">
 <meta property="article:author" content="Strings Ninety-nine">
-<meta property="article:tag" content="cmake">
-<meta property="article:tag" content="cpp">
+<meta property="article:tag" content="llvm">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>cmake告警 - Hexo</title>
+  <title>llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="cmake告警"></span>
+            <span id="subtitle" data-typed-text="llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr"></span>
           
         </div>
 
@@ -212,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-24 22:42" pubdate>
-          2025年11月24日 晚上
+        <time datetime="2025-12-27 23:50" pubdate>
+          2025年12月27日 晚上
         </time>
       </span>
     
@@ -224,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          175 字
+          866 字
         
       </span>
     
@@ -235,7 +234,7 @@
         
         
         
-          2 分钟
+          8 分钟
         
       </span>
     
@@ -272,22 +271,110 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">cmake告警</h1>
+            <h1 id="seo-header">llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr</h1>
             
             
               <div class="markdown-body">
                 
-                <p>强迫症福利：消除cmake配置过程中的一些告警信息。</p>
+                <p>源码详见 <code>llvm/include/llvm/ADT/IntrusiveRefCntPtr.h</code></p>
 <span id="more"></span>
 
-<h2 id="抑制告警"><a href="#抑制告警" class="headerlink" title="抑制告警"></a>抑制告警</h2><p>直接使用 <code>-Wno-dev</code> 临时抑制警告生成：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">cmake -Wno-dev ...<br></code></pre></td></tr></table></figure>
+<h4 id="RefCountedBase-ThreadSafeRefCountedBase-类"><a href="#RefCountedBase-ThreadSafeRefCountedBase-类" class="headerlink" title="RefCountedBase &amp; ThreadSafeRefCountedBase 类"></a>RefCountedBase &amp; ThreadSafeRefCountedBase 类</h4><p>要了解 <code>IntrusiveRefCntPtr</code>，必须先了解 <code>RefCountedBase</code> 类，这是一个为类型添加引用计数的 CRTP mixin 类。它分为线程非安全和线程安全两个版本，分别为 <code>RefCountedBase</code> 和 <code>ThreadSafeRefCountedBase</code>。</p>
+<pre><code class=" mermaid">classDiagram
+    class RefCountedBase~Derived~ &#123;
+        &lt;&lt;template&gt;&gt;
+        -RefCount: mutable unsigned
+        +Retain() void
+        +Release() void
+    &#125;
+    class ThreadSafeRefCountedBase &#123;
+        &lt;&lt;template&gt;&gt;
+        -RefCount: mutable std::atomic~int~
+        +Retain() void
+        +Release() void
+    &#125;
+</code></pre>
 
-<h2 id="策略告警"><a href="#策略告警" class="headerlink" title="策略告警"></a>策略告警</h2><p>当使用版本较高的cmake编译老项目，会出现一些策略告警，例如，笔者使用cmake3.31.0编译了llvm-project-12.0.0，出现了如下的告警信息（具有普适性）</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">CMake <span class="hljs-built_in">Warning</span> (dev) at /home/nnstrings/llvm-project/clang/CMakeLists.txt:<span class="hljs-number">292</span> (find_package):<br>  <span class="hljs-keyword">Policy</span> CMP0146 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">set</span>: The FindCUDA module <span class="hljs-keyword">is</span> removed.  Run &quot;cmake<br>  --help-policy CMP0146&quot; <span class="hljs-keyword">for</span> <span class="hljs-keyword">policy</span> details.  Use the cmake_policy command <span class="hljs-keyword">to</span><br>  <span class="hljs-keyword">set</span> the <span class="hljs-keyword">policy</span> <span class="hljs-keyword">and</span> suppress this <span class="hljs-built_in">warning</span>.<br><br>This <span class="hljs-built_in">warning</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">for</span> project developers.  Use -Wno-dev <span class="hljs-keyword">to</span> suppress it.<br></code></pre></td></tr></table></figure>
+<p>其中，<code>Retain()</code> 使计数器加一，<code>Release()</code> 使计数器减一，如果计算之后计数器 <code>RefCount</code> 为 0，则释放 <code>Derived</code> 指针。</p>
+<p>对于线程安全版本，在处理计数器增减做了线程安全处理。其中，加法不需要考虑被重排到其他位置的问题，只需要保证它是原子加法即可，因为 <code>Retain</code> 本身就意味着一定有一个线程持有该对象。而对于减法，我们要保证析构线程的前后都必须是可见的，不能出现内存释放后有对数据进行操作的行为。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Retain</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; RefCount.<span class="hljs-built_in">fetch_add</span>(<span class="hljs-number">1</span>, std::memory_order_relaxed); &#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Release</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br><span class="hljs-type">int</span> NewRefCount = RefCount.<span class="hljs-built_in">fetch_sub</span>(<span class="hljs-number">1</span>, std::memory_order_acq_rel) - <span class="hljs-number">1</span>;<br><span class="hljs-built_in">assert</span>(NewRefCount &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-string">&quot;Reference count was already zero.&quot;</span>);<br><span class="hljs-keyword">if</span> (NewRefCount == <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">delete</span> <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">const</span> Derived *&gt;(<span class="hljs-keyword">this</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>定位关键信息路径 <code>/home/nnstrings/llvm-project/clang/CMakeLists.txt</code> 和策略名称 <code>CMP0146</code>，只要在指定的 <code>CMakeLists.txt</code> 开头或警告前加入如下代码即可消除告警</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">POLICY</span> CMP0146)<br>  <span class="hljs-keyword">cmake_policy</span>(<span class="hljs-keyword">SET</span> CMP0146 NEW)<br><span class="hljs-keyword">endif</span>()<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>❓ 有没有一种情况，线程A执行了 Retain，线程B执行了 Release，结果问题发生了，B率先释放了内存，A在对计数器进行加1操作出现内存泄漏？<br>💡 这是对于这个结构的未定义行为，不允许这么使用，而不是这个结构设计的本身有问题</p>
+</blockquote>
+<h4 id="IntrusiveRefCntPtr-类"><a href="#IntrusiveRefCntPtr-类" class="headerlink" title="IntrusiveRefCntPtr 类"></a>IntrusiveRefCntPtr 类</h4><p><code>IntrusiveRefCntPtr</code> 类是一个侵入式智能指针。</p>
+<p><code>IntrusiveRefCntPtr</code> 类是一个模板类，它的模板参数类至少需要包含 <code>Retain</code> 和 <code>Release</code> 这两个方法，一般情况下，这个类需要递归继承自 <code>RefCountedBase</code> 类或 <code>ThreadSafeRefCountedBase</code> 类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> : <span class="hljs-keyword">public</span> RefCountedBase&lt;A&gt; &#123;&#125;;<br>IntrusiveRefCntPtr&lt;A&gt; APtr;<br></code></pre></td></tr></table></figure>
+
+<p><code>IntrusiveRefCntPtr</code> 不仅支持本身的普通指针、拷贝、移动构造，还支持跨类型的拷贝、移动</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">X</span>&gt;<br><span class="hljs-built_in">IntrusiveRefCntPtr</span>(IntrusiveRefCntPtr&lt;X&gt; &amp;&amp;S) : <span class="hljs-built_in">Obj</span>(S.<span class="hljs-built_in">get</span>()) &#123;<br>    S.Obj = <span class="hljs-literal">nullptr</span>;<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">X</span>&gt;<br><span class="hljs-built_in">IntrusiveRefCntPtr</span>(std::unique_ptr&lt;X&gt; S) : <span class="hljs-built_in">Obj</span>(S.<span class="hljs-built_in">release</span>()) &#123;<br>    <span class="hljs-built_in">retain</span>();<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">X</span>&gt;<br><span class="hljs-built_in">IntrusiveRefCntPtr</span>(<span class="hljs-type">const</span> IntrusiveRefCntPtr&lt;X&gt; &amp;S) : <span class="hljs-built_in">Obj</span>(S.<span class="hljs-built_in">get</span>()) &#123;<br>    <span class="hljs-built_in">retain</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>大家可能注意到在跨类型的移动中，类直接访问了其他对象的私有成员 <code>S.Obj = nullptr;</code>，<code>IntrusiveRefCntPtr</code> 类通过自己当作了自己的友元来解决这个问题。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> X&gt; <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IntrusiveRefCntPtr</span>;<br></code></pre></td></tr></table></figure>
+
+<p>在 <code>IntrusiveRefCntPtr</code> 类中，核心函数 <code>Retain</code> 和 <code>Release</code> 存储在 <code>IntrusiveRefCntPtrInfo</code> 类中，以<strong>组合</strong>的方式存在。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">retain</span><span class="hljs-params">()</span> </span>&#123;<br><span class="hljs-keyword">if</span> (Obj)<br>    IntrusiveRefCntPtrInfo&lt;T&gt;::<span class="hljs-built_in">retain</span>(Obj);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">release</span><span class="hljs-params">()</span> </span>&#123;<br><span class="hljs-keyword">if</span> (Obj)<br>    IntrusiveRefCntPtrInfo&lt;T&gt;::<span class="hljs-built_in">release</span>(Obj);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🔑 这种将 <code>Retain</code> 和 <code>Release</code> 独立在外面有很多好处：</p>
+<ul>
+<li>将这两个接口函数从智能指针中独立出来，完成解耦</li>
+<li>我们可以通过特化 <code>IntrusiveRefCntPtrInfo</code> 来自定义两个接口函数的行为。</li>
+<li>可以解决循环头文件包含的问题。（❓<strong>没构造出来</strong>）</li>
+</ul>
+</blockquote>
+<p>IntrusiveRefCntPtr 以及相关类之间的关系：</p>
+<pre><code class=" mermaid">classDiagram
+    class RefCountedBase~T~ &#123;
+        &lt;&lt;abstract&gt;&gt;
+        -int refCount
+        +Retain() void
+        +Release() void
+    &#125;
+
+    class ThreadSafeRefCountedBase~T~ &#123;
+        &lt;&lt;abstract&gt;&gt;
+        -atomic_int refCount
+        +Retain() void
+        +Release() void
+    &#125;
+
+    class IntrusiveRefCntPtrInfo~T~ &#123;
+        &lt;&lt;template&gt;&gt;
+        -T* ptr
+        +IntrusiveRefCntPtrInfo(T*)
+        +Retain() void
+        +Release() void
+    &#125;
+
+    class IntrusiveRefCntPtr~T~ &#123;
+        &lt;&lt;template&gt;&gt;
+        -IntrusiveRefCntPtrInfo~T~ info
+        +IntrusiveRefCntPtr(T*)
+        +~IntrusiveRefCntPtr()
+        +swap(IntrusiveRefCntPtr&amp;) void
+        +reset() void
+        +resetWithoutRelease() void
+    &#125;
+
+    class T &#123;
+        &lt;&lt;T必须递归继承自RefCountedBase或ThreadSafeRefCountedBase&gt;&gt;
+    &#125;
+
+    %% 继承关系
+    T --|&gt; RefCountedBase~T~ : CRTP
+    T --|&gt; ThreadSafeRefCountedBase~T~ : CRTP
+
+    %% 组合关系
+    IntrusiveRefCntPtr~T~ *-- IntrusiveRefCntPtrInfo~T~ : 包含
+
+    %% 依赖关系
+    IntrusiveRefCntPtr~T~ ..&gt; T : 模板参数
+
+    %% 模板参数关系
+    note for T &quot;模板参数T必须满足：
+    T : public RefCountedBase&lt; T &gt; 或 public ThreadSafeRefCountedBase&lt; T &gt;&quot;
+</code></pre>
 
                 
               </div>
@@ -306,7 +393,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/cmake/" class="category-chain-item">cmake</a>
+  <a href="/categories/cpp/" class="category-chain-item">cpp</a>
   
   
 
@@ -321,9 +408,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/cmake/" class="print-no-link">#cmake</a>
-      
-        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
+        <a href="/tags/llvm/" class="print-no-link">#llvm</a>
       
     </div>
   
@@ -335,8 +420,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>cmake告警</div>
-      <div>https://nnstrings.github.io/2025/11/24/cmake/cmake告警/</div>
+      <div>llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr</div>
+      <div>https://nnstrings.github.io/2025/12/27/llvm12/llvm12源码解析-基础数据结构-IntrusiveRefCntPtr/</div>
     </div>
     <div class="license-meta">
       
@@ -348,7 +433,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年11月24日</div>
+          <div>2025年12月27日</div>
         </div>
       
       
@@ -380,9 +465,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/12/27/llvm12/llvm12%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-IntrusiveRefCntPtr/" title="llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr">
+                      <a href="/2026/01/25/git/git%E9%85%8D%E7%BD%AE/" title="git配置">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr</span>
+                        <span class="hidden-mobile">git配置</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -390,8 +475,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/11/09/tools/C++Json%E9%85%8D%E7%BD%AE/" title="VSCode C++ Json配置">
-                        <span class="hidden-mobile">VSCode C++ Json配置</span>
+                      <a href="/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/" title="cmake告警">
+                        <span class="hidden-mobile">cmake告警</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

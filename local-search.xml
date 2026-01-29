@@ -4,6 +4,82 @@
   
   
   <entry>
+    <title>llvm-12.0.0源码解析-基础数据类型-DebugEpochBase</title>
+    <link href="/2026/01/28/llvm12/llvm-12-0-0%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-DebugEpochBase/"/>
+    <url>/2026/01/28/llvm12/llvm-12-0-0%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-DebugEpochBase/</url>
+    
+    <content type="html"><![CDATA[<p>源码详见 <code>llvm/include/llvm/ADT/EpochTracker.h</code></p><span id="more"></span>]]></content>
+    
+    
+    <categories>
+      
+      <category>cpp</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>llvm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>tree命令</title>
+    <link href="/2026/01/25/linux-cmd/tree%E5%91%BD%E4%BB%A4/"/>
+    <url>/2026/01/25/linux-cmd/tree%E5%91%BD%E4%BB%A4/</url>
+    
+    <content type="html"><![CDATA[<span id="more"></span><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有目录和文件</span><br>tree<br><span class="hljs-comment"># 查看指定目录</span><br>tree /path/to/directory<br><span class="hljs-comment"># 查看所有目录和文件（包括隐藏文件）</span><br>tree -a<br></code></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 显示两层深度</span><br>tree -L 2<br><span class="hljs-comment"># 只显示目录</span><br>tree -d<br><span class="hljs-comment"># 显示完整路径</span><br>tree -f<br><span class="hljs-comment"># 显示权限信息</span><br>tree -p<br><span class="hljs-comment"># 排除特定文件/目录</span><br>tree -I <span class="hljs-string">&quot;node_modules|*.log&quot;</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>git配置</title>
+    <link href="/2026/01/25/git/git%E9%85%8D%E7%BD%AE/"/>
+    <url>/2026/01/25/git/git%E9%85%8D%E7%BD%AE/</url>
+    
+    <content type="html"><![CDATA[<span id="more"></span><h4 id="配置用户名-邮箱信息"><a href="#配置用户名-邮箱信息" class="headerlink" title="配置用户名&#x2F;邮箱信息"></a>配置用户名&#x2F;邮箱信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;nnstrings&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;nnstrings99@gmail.com&quot;</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr</title>
+    <link href="/2025/12/27/llvm12/llvm12%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-IntrusiveRefCntPtr/"/>
+    <url>/2025/12/27/llvm12/llvm12%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-IntrusiveRefCntPtr/</url>
+    
+    <content type="html"><![CDATA[<p>源码详见 <code>llvm/include/llvm/ADT/IntrusiveRefCntPtr.h</code></p><span id="more"></span><h4 id="RefCountedBase-ThreadSafeRefCountedBase-类"><a href="#RefCountedBase-ThreadSafeRefCountedBase-类" class="headerlink" title="RefCountedBase &amp; ThreadSafeRefCountedBase 类"></a>RefCountedBase &amp; ThreadSafeRefCountedBase 类</h4><p>要了解 <code>IntrusiveRefCntPtr</code>，必须先了解 <code>RefCountedBase</code> 类，这是一个为类型添加引用计数的 CRTP mixin 类。它分为线程非安全和线程安全两个版本，分别为 <code>RefCountedBase</code> 和 <code>ThreadSafeRefCountedBase</code>。</p><pre><code class=" mermaid">classDiagram    class RefCountedBase~Derived~ &#123;        &lt;&lt;template&gt;&gt;        -RefCount: mutable unsigned        +Retain() void        +Release() void    &#125;    class ThreadSafeRefCountedBase &#123;        &lt;&lt;template&gt;&gt;        -RefCount: mutable std::atomic~int~        +Retain() void        +Release() void    &#125;</code></pre><p>其中，<code>Retain()</code> 使计数器加一，<code>Release()</code> 使计数器减一，如果计算之后计数器 <code>RefCount</code> 为 0，则释放 <code>Derived</code> 指针。</p><p>对于线程安全版本，在处理计数器增减做了线程安全处理。其中，加法不需要考虑被重排到其他位置的问题，只需要保证它是原子加法即可，因为 <code>Retain</code> 本身就意味着一定有一个线程持有该对象。而对于减法，我们要保证析构线程的前后都必须是可见的，不能出现内存释放后有对数据进行操作的行为。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Retain</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; RefCount.<span class="hljs-built_in">fetch_add</span>(<span class="hljs-number">1</span>, std::memory_order_relaxed); &#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Release</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br><span class="hljs-type">int</span> NewRefCount = RefCount.<span class="hljs-built_in">fetch_sub</span>(<span class="hljs-number">1</span>, std::memory_order_acq_rel) - <span class="hljs-number">1</span>;<br><span class="hljs-built_in">assert</span>(NewRefCount &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-string">&quot;Reference count was already zero.&quot;</span>);<br><span class="hljs-keyword">if</span> (NewRefCount == <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">delete</span> <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">const</span> Derived *&gt;(<span class="hljs-keyword">this</span>);<br>&#125;<br></code></pre></td></tr></table></figure><blockquote><p>❓ 有没有一种情况，线程A执行了 Retain，线程B执行了 Release，结果问题发生了，B率先释放了内存，A在对计数器进行加1操作出现内存泄漏？<br>💡 这是对于这个结构的未定义行为，不允许这么使用，而不是这个结构设计的本身有问题</p></blockquote><h4 id="IntrusiveRefCntPtr-类"><a href="#IntrusiveRefCntPtr-类" class="headerlink" title="IntrusiveRefCntPtr 类"></a>IntrusiveRefCntPtr 类</h4><p><code>IntrusiveRefCntPtr</code> 类是一个侵入式智能指针。</p><p><code>IntrusiveRefCntPtr</code> 类是一个模板类，它的模板参数类至少需要包含 <code>Retain</code> 和 <code>Release</code> 这两个方法，一般情况下，这个类需要递归继承自 <code>RefCountedBase</code> 类或 <code>ThreadSafeRefCountedBase</code> 类。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> : <span class="hljs-keyword">public</span> RefCountedBase&lt;A&gt; &#123;&#125;;<br>IntrusiveRefCntPtr&lt;A&gt; APtr;<br></code></pre></td></tr></table></figure><p><code>IntrusiveRefCntPtr</code> 不仅支持本身的普通指针、拷贝、移动构造，还支持跨类型的拷贝、移动</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">X</span>&gt;<br><span class="hljs-built_in">IntrusiveRefCntPtr</span>(IntrusiveRefCntPtr&lt;X&gt; &amp;&amp;S) : <span class="hljs-built_in">Obj</span>(S.<span class="hljs-built_in">get</span>()) &#123;<br>    S.Obj = <span class="hljs-literal">nullptr</span>;<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">X</span>&gt;<br><span class="hljs-built_in">IntrusiveRefCntPtr</span>(std::unique_ptr&lt;X&gt; S) : <span class="hljs-built_in">Obj</span>(S.<span class="hljs-built_in">release</span>()) &#123;<br>    <span class="hljs-built_in">retain</span>();<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">X</span>&gt;<br><span class="hljs-built_in">IntrusiveRefCntPtr</span>(<span class="hljs-type">const</span> IntrusiveRefCntPtr&lt;X&gt; &amp;S) : <span class="hljs-built_in">Obj</span>(S.<span class="hljs-built_in">get</span>()) &#123;<br>    <span class="hljs-built_in">retain</span>();<br>&#125;<br></code></pre></td></tr></table></figure><p>大家可能注意到在跨类型的移动中，类直接访问了其他对象的私有成员 <code>S.Obj = nullptr;</code>，<code>IntrusiveRefCntPtr</code> 类通过自己当作了自己的友元来解决这个问题。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> X&gt; <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IntrusiveRefCntPtr</span>;<br></code></pre></td></tr></table></figure><p>在 <code>IntrusiveRefCntPtr</code> 类中，核心函数 <code>Retain</code> 和 <code>Release</code> 存储在 <code>IntrusiveRefCntPtrInfo</code> 类中，以<strong>组合</strong>的方式存在。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">retain</span><span class="hljs-params">()</span> </span>&#123;<br><span class="hljs-keyword">if</span> (Obj)<br>    IntrusiveRefCntPtrInfo&lt;T&gt;::<span class="hljs-built_in">retain</span>(Obj);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">release</span><span class="hljs-params">()</span> </span>&#123;<br><span class="hljs-keyword">if</span> (Obj)<br>    IntrusiveRefCntPtrInfo&lt;T&gt;::<span class="hljs-built_in">release</span>(Obj);<br>&#125;<br></code></pre></td></tr></table></figure><blockquote><p>🔑 这种将 <code>Retain</code> 和 <code>Release</code> 独立在外面有很多好处：</p><ul><li>将这两个接口函数从智能指针中独立出来，完成解耦</li><li>我们可以通过特化 <code>IntrusiveRefCntPtrInfo</code> 来自定义两个接口函数的行为。</li><li>可以解决循环头文件包含的问题。（❓<strong>没构造出来</strong>）</li></ul></blockquote><p>IntrusiveRefCntPtr 以及相关类之间的关系：</p><pre><code class=" mermaid">classDiagram    class RefCountedBase~T~ &#123;        &lt;&lt;abstract&gt;&gt;        -int refCount        +Retain() void        +Release() void    &#125;    class ThreadSafeRefCountedBase~T~ &#123;        &lt;&lt;abstract&gt;&gt;        -atomic_int refCount        +Retain() void        +Release() void    &#125;    class IntrusiveRefCntPtrInfo~T~ &#123;        &lt;&lt;template&gt;&gt;        -T* ptr        +IntrusiveRefCntPtrInfo(T*)        +Retain() void        +Release() void    &#125;    class IntrusiveRefCntPtr~T~ &#123;        &lt;&lt;template&gt;&gt;        -IntrusiveRefCntPtrInfo~T~ info        +IntrusiveRefCntPtr(T*)        +~IntrusiveRefCntPtr()        +swap(IntrusiveRefCntPtr&amp;) void        +reset() void        +resetWithoutRelease() void    &#125;    class T &#123;        &lt;&lt;T必须递归继承自RefCountedBase或ThreadSafeRefCountedBase&gt;&gt;    &#125;    %% 继承关系    T --|&gt; RefCountedBase~T~ : CRTP    T --|&gt; ThreadSafeRefCountedBase~T~ : CRTP    %% 组合关系    IntrusiveRefCntPtr~T~ *-- IntrusiveRefCntPtrInfo~T~ : 包含    %% 依赖关系    IntrusiveRefCntPtr~T~ ..&gt; T : 模板参数    %% 模板参数关系    note for T &quot;模板参数T必须满足：    T : public RefCountedBase&lt; T &gt; 或 public ThreadSafeRefCountedBase&lt; T &gt;&quot;</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>cpp</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>llvm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>cmake告警</title>
     <link href="/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/"/>
     <url>/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/</url>
@@ -115,7 +191,7 @@
     <link href="/2025/09/22/cpp/C++%E6%9C%AF%E8%AF%AD/"/>
     <url>/2025/09/22/cpp/C++%E6%9C%AF%E8%AF%AD/</url>
     
-    <content type="html"><![CDATA[<p><strong>翻译单元（Translation Unit）：</strong> C++编译过程的基本单位。它通常指一个经过预处理的源文件（即一个.cpp文件及其所有通过#include指令包含的头文件），其中不再包含任何预处理器指令。编译器独立地将每个翻译单元编译成目标文件。</p><p><strong>潜在作用域（Potential Scope）：</strong> 一个名字（如变量名、函数名）在源代码中理论上可以被使用的区域。</p><p><strong>内部链接（Internal Linkage）：</strong> 一种链接属性，指一个名字（如变量、函数、常量）的作用域被限制在它所在的翻译单元内部。具有内部链接的符号在不同的翻译单元中可以有相同的名字而不会引发链接错误，因为它们彼此独立。</p>]]></content>
+    <content type="html"><![CDATA[<span id="more"></span><p><strong>翻译单元（Translation Unit）：</strong> C++编译过程的基本单位。它通常指一个经过预处理的源文件（即一个.cpp文件及其所有通过#include指令包含的头文件），其中不再包含任何预处理器指令。编译器独立地将每个翻译单元编译成目标文件。</p><p><strong>潜在作用域（Potential Scope）：</strong> 一个名字（如变量名、函数名）在源代码中理论上可以被使用的区域。</p><p><strong>内部链接（Internal Linkage）：</strong> 一种链接属性，指一个名字（如变量、函数、常量）的作用域被限制在它所在的翻译单元内部。具有内部链接的符号在不同的翻译单元中可以有相同的名字而不会引发链接错误，因为它们彼此独立。</p><p><strong>一等公民（First-class Citizen）：</strong> 在编程语言设计中，如果一个实体（如类型、值、函数等）能够支持其他实体通常所能做的所有操作（包括能被作为参数传递、能从子程序中返回、能赋给变量、能在运行时创建、能进行相等比较），则被称为一等公民。</p><p><strong>奇异递归模板模式（CRTP, Curiously Recurring Template Pattern）：</strong> 一种 C++ 模板编程技术，其中派生类继承自以自身为模板参数的基类（例如 <code>class Derived : public Base&lt;Derived&gt;</code> 中的 <code>Base</code> 类）。</p><p><strong>混合（Mixin, Mix in）：</strong> 一种通过组合多个小功能类来构建复杂类的设计模式，通常使用模板和多重继承实现。</p>]]></content>
     
     
     

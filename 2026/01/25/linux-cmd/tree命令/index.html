@@ -19,23 +19,21 @@
   <meta name="author" content="Strings Ninety-nine">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强迫症福利：消除cmake配置过程中的一些告警信息。">
+    <meta name="description" content="123456# 查看所有目录和文件tree# 查看指定目录tree &#x2F;path&#x2F;to&#x2F;directory# 查看所有目录和文件（包括隐藏文件）tree -a  12345678910# 显示两层深度tree -L 2# 只显示目录tree -d# 显示完整路径tree -f# 显示权限信息tree -p# 排除特定文件&#x2F;目录tree -I &quot;node_modules|*.log&amp;qu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cmake告警">
-<meta property="og:url" content="https://nnstrings.github.io/2025/11/24/cmake/cmake%E5%91%8A%E8%AD%A6/index.html">
+<meta property="og:title" content="tree命令">
+<meta property="og:url" content="https://nnstrings.github.io/2026/01/25/linux-cmd/tree%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="强迫症福利：消除cmake配置过程中的一些告警信息。">
+<meta property="og:description" content="123456# 查看所有目录和文件tree# 查看指定目录tree &#x2F;path&#x2F;to&#x2F;directory# 查看所有目录和文件（包括隐藏文件）tree -a  12345678910# 显示两层深度tree -L 2# 只显示目录tree -d# 显示完整路径tree -f# 显示权限信息tree -p# 排除特定文件&#x2F;目录tree -I &quot;node_modules|*.log&amp;qu">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-11-24T14:42:38.000Z">
-<meta property="article:modified_time" content="2025-11-24T14:51:34.634Z">
+<meta property="article:published_time" content="2026-01-25T14:29:05.000Z">
+<meta property="article:modified_time" content="2026-01-27T16:17:00.511Z">
 <meta property="article:author" content="Strings Ninety-nine">
-<meta property="article:tag" content="cmake">
-<meta property="article:tag" content="cpp">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>cmake告警 - Hexo</title>
+  <title>tree命令 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="cmake告警"></span>
+            <span id="subtitle" data-typed-text="tree命令"></span>
           
         </div>
 
@@ -212,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-24 22:42" pubdate>
-          2025年11月24日 晚上
+        <time datetime="2026-01-25 22:29" pubdate>
+          2026年1月25日 晚上
         </time>
       </span>
     
@@ -224,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          175 字
+          83 字
         
       </span>
     
@@ -235,7 +233,7 @@
         
         
         
-          2 分钟
+          1 分钟
         
       </span>
     
@@ -272,22 +270,17 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">cmake告警</h1>
+            <h1 id="seo-header">tree命令</h1>
             
             
               <div class="markdown-body">
                 
-                <p>强迫症福利：消除cmake配置过程中的一些告警信息。</p>
-<span id="more"></span>
+                <span id="more"></span>
 
-<h2 id="抑制告警"><a href="#抑制告警" class="headerlink" title="抑制告警"></a>抑制告警</h2><p>直接使用 <code>-Wno-dev</code> 临时抑制警告生成：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">cmake -Wno-dev ...<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有目录和文件</span><br>tree<br><span class="hljs-comment"># 查看指定目录</span><br>tree /path/to/directory<br><span class="hljs-comment"># 查看所有目录和文件（包括隐藏文件）</span><br>tree -a<br></code></pre></td></tr></table></figure>
 
-<h2 id="策略告警"><a href="#策略告警" class="headerlink" title="策略告警"></a>策略告警</h2><p>当使用版本较高的cmake编译老项目，会出现一些策略告警，例如，笔者使用cmake3.31.0编译了llvm-project-12.0.0，出现了如下的告警信息（具有普适性）</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">CMake <span class="hljs-built_in">Warning</span> (dev) at /home/nnstrings/llvm-project/clang/CMakeLists.txt:<span class="hljs-number">292</span> (find_package):<br>  <span class="hljs-keyword">Policy</span> CMP0146 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">set</span>: The FindCUDA module <span class="hljs-keyword">is</span> removed.  Run &quot;cmake<br>  --help-policy CMP0146&quot; <span class="hljs-keyword">for</span> <span class="hljs-keyword">policy</span> details.  Use the cmake_policy command <span class="hljs-keyword">to</span><br>  <span class="hljs-keyword">set</span> the <span class="hljs-keyword">policy</span> <span class="hljs-keyword">and</span> suppress this <span class="hljs-built_in">warning</span>.<br><br>This <span class="hljs-built_in">warning</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">for</span> project developers.  Use -Wno-dev <span class="hljs-keyword">to</span> suppress it.<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 显示两层深度</span><br>tree -L 2<br><span class="hljs-comment"># 只显示目录</span><br>tree -d<br><span class="hljs-comment"># 显示完整路径</span><br>tree -f<br><span class="hljs-comment"># 显示权限信息</span><br>tree -p<br><span class="hljs-comment"># 排除特定文件/目录</span><br>tree -I <span class="hljs-string">&quot;node_modules|*.log&quot;</span><br></code></pre></td></tr></table></figure>
 
-<p>定位关键信息路径 <code>/home/nnstrings/llvm-project/clang/CMakeLists.txt</code> 和策略名称 <code>CMP0146</code>，只要在指定的 <code>CMakeLists.txt</code> 开头或警告前加入如下代码即可消除告警</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">POLICY</span> CMP0146)<br>  <span class="hljs-keyword">cmake_policy</span>(<span class="hljs-keyword">SET</span> CMP0146 NEW)<br><span class="hljs-keyword">endif</span>()<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -296,36 +289,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/cmake/" class="category-chain-item">cmake</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/cmake/" class="print-no-link">#cmake</a>
-      
-        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
-      
-    </div>
   
 </div>
 
@@ -335,8 +298,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>cmake告警</div>
-      <div>https://nnstrings.github.io/2025/11/24/cmake/cmake告警/</div>
+      <div>tree命令</div>
+      <div>https://nnstrings.github.io/2026/01/25/linux-cmd/tree命令/</div>
     </div>
     <div class="license-meta">
       
@@ -348,7 +311,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年11月24日</div>
+          <div>2026年1月25日</div>
         </div>
       
       
@@ -380,9 +343,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/12/27/llvm12/llvm12%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-IntrusiveRefCntPtr/" title="llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr">
+                      <a href="/2026/01/28/llvm12/llvm-12-0-0%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-DebugEpochBase/" title="llvm-12.0.0源码解析-基础数据类型-DebugEpochBase">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">llvm-12.0.0源码解析-基础数据结构-IntrusiveRefCntPtr</span>
+                        <span class="hidden-mobile">llvm-12.0.0源码解析-基础数据类型-DebugEpochBase</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -390,8 +353,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/11/09/tools/C++Json%E9%85%8D%E7%BD%AE/" title="VSCode C++ Json配置">
-                        <span class="hidden-mobile">VSCode C++ Json配置</span>
+                      <a href="/2026/01/25/git/git%E9%85%8D%E7%BD%AE/" title="git配置">
+                        <span class="hidden-mobile">git配置</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
