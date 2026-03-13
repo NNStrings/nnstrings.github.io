@@ -27,7 +27,7 @@
 <meta property="og:description" content="翻译单元（Translation Unit）： C++编译过程的基本单位。它通常指一个经过预处理的源文件（即一个.cpp文件及其所有通过#include指令包含的头文件），其中不再包含任何预处理器指令。编译器独立地将每个翻译单元编译成目标文件。 潜在作用域（Potential Scope）： 一个名字（如变量名、函数名）在源代码中理论上可以被使用的区域。 内部链接（Internal Linka">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-09-22T14:58:50.000Z">
-<meta property="article:modified_time" content="2026-01-27T16:17:08.187Z">
+<meta property="article:modified_time" content="2026-03-10T15:54:22.320Z">
 <meta property="article:author" content="Strings Ninety-nine">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          381 字
+          607 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          4 分钟
+          6 分钟
         
       </span>
     
@@ -283,6 +283,9 @@
 <p><strong>一等公民（First-class Citizen）：</strong> 在编程语言设计中，如果一个实体（如类型、值、函数等）能够支持其他实体通常所能做的所有操作（包括能被作为参数传递、能从子程序中返回、能赋给变量、能在运行时创建、能进行相等比较），则被称为一等公民。</p>
 <p><strong>奇异递归模板模式（CRTP, Curiously Recurring Template Pattern）：</strong> 一种 C++ 模板编程技术，其中派生类继承自以自身为模板参数的基类（例如 <code>class Derived : public Base&lt;Derived&gt;</code> 中的 <code>Base</code> 类）。</p>
 <p><strong>混合（Mixin, Mix in）：</strong> 一种通过组合多个小功能类来构建复杂类的设计模式，通常使用模板和多重继承实现。</p>
+<p><strong>cv（const&#x2F;volatile）：</strong> 一个 cppreference 的术语 表示被 const&#x2F;volatile 限定的对象。</p>
+<p><strong>良构（well-formed）：</strong> 指完全符合语言规范（语法和语义规则）的程序或代码片段，能够被编译器成功解析并生成可执行代码，不会触发任何诊断消息（即编译错误或警告）。</p>
+<p><strong>平凡（trivial）</strong>：用于描述特殊成员函数（如默认构造函数、拷贝构造函数、拷贝赋值运算符、析构函数）或整个类型的一种属性。一个平凡的特殊成员函数意味着它由编译器隐式生成，且不执行任何用户自定义的操作。一个平凡类型（trivial type）是指其特殊成员函数均为平凡，且没有虚函数或虚基类的类型；它可以直接用memcpy安全地复制，其生命周期管理极其简单高效。</p>
 
                 
               </div>
